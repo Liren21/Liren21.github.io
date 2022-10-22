@@ -64694,10 +64694,17 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
 
 var MyComponent = function MyComponent(_a) {
   var data = _a.data;
-  return React.createElement(React.Fragment, null, data.map(function (data) {
+  return React.createElement("div", {
+    style: {
+      overflowY: 'scroll',
+      height: '16rem',
+      width: '100%'
+    }
+  }, data.map(function (data) {
     return React.createElement(react_bootstrap_1.Card, {
       style: {
-        transform: 'none'
+        transform: 'none',
+        boxShadow: 'none'
       },
       key: (0, nanoid_1.nanoid)()
     }, React.createElement(react_bootstrap_1.Card.Title, null, data.title), React.createElement(react_bootstrap_1.Card.Body, null, data.body, " ", React.createElement("i", {
@@ -64785,6 +64792,7 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
     onClick: handleShow,
     variant: "outline-primary"
   }, "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044F"), React.createElement(react_bootstrap_1.Modal, {
+    centered: true,
     show: show,
     onHide: handleClose
   }, React.createElement(react_bootstrap_1.Modal.Body, null, React.createElement(InfoCard_1.default, null), React.createElement("br", null), React.createElement("br", null), React.createElement(react_bootstrap_1.Button, {
@@ -66246,7 +66254,6 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
       xs: 6,
       md: 6
     }, react_1.default.createElement(react_bootstrap_1.Button, {
-      target: '_blank',
       href: data.link,
       style: {
         background: '#5925DC',
@@ -77372,7 +77379,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32933" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46857" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
