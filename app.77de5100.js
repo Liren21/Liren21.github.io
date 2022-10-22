@@ -60290,21 +60290,9 @@ var core_urls_1 = __importDefault(require("../../lib/core-urls"));
 
 var routes_1 = __importDefault(require("../../../app/lib/routes"));
 
-var react_1 = require("react");
-
 var react_scrollbars_custom_1 = __importDefault(require("react-scrollbars-custom"));
 
 var HeaderApp = (0, mobx_react_lite_1.observer)(function () {
-  var _a = (0, react_1.useState)(false),
-      isMenuOpen = _a[0],
-      setIsMenuOpen = _a[1];
-
-  var toggleMenu = function toggleMenu() {
-    return setIsMenuOpen(function (isOpen) {
-      return !isOpen;
-    });
-  };
-
   return React.createElement(react_scrollbars_custom_1.default, null, React.createElement("div", {
     className: 'header-app'
   }, React.createElement(react_bootstrap_1.Navbar, {
@@ -60320,7 +60308,6 @@ var HeaderApp = (0, mobx_react_lite_1.observer)(function () {
     className: 'justify-content-end',
     id: 'basic-navbar-nav'
   }, React.createElement(react_bootstrap_1.Nav, null, React.createElement(react_bootstrap_1.Nav.Link, {
-    onClick: toggleMenu,
     className: 'icon',
     href: '#' + routes_1.default.HOME
   }, React.createElement("i", {
@@ -77301,7 +77288,9 @@ exports.App = (0, mobx_react_lite_1.observer)(function () {
   };
   return React.createElement("div", {
     className: 'app'
-  }, React.createElement(HeaderApp_1.default, null), React.createElement(react_bootstrap_1.Container, null, React.createElement(LoaderOverlay_1.LoaderOverlay, {
+  }, React.createElement(HeaderApp_1.default, null), React.createElement(react_bootstrap_1.Container, {
+    fluid: "sm"
+  }, React.createElement(LoaderOverlay_1.LoaderOverlay, {
     loading: app_1.default.loading
   }), React.createElement(Router_1.default, null)), React.createElement(react_toastify_1.ToastContainer, __assign({}, optionsToaster)));
 });
@@ -77383,7 +77372,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41595" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32933" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
