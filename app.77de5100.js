@@ -56217,7 +56217,4021 @@ exports.default = {
   LOAN_PORTFOLIO: '/loan_portfolio',
   PERSON_DATA: '/personal_data'
 };
-},{}],"../core/components/HeaderApp/HeaderApp.tsx":[function(require,module,exports) {
+},{}],"../../node_modules/cnbuilder/esm/cnb.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.cnb = cnb;
+var isArray = Array.isArray;
+
+var toClassName = function (val) {
+  var str = '';
+  if (typeof val === 'string') str += val;else if (typeof val === 'object') {
+    var tmp = void 0;
+
+    if (isArray(val)) {
+      var i = 0;
+      var l = val.length;
+
+      while (i < l) {
+        tmp = toClassName(val[i++]);
+
+        if (tmp) {
+          if (str) {
+            str += ' ';
+          }
+
+          str += tmp;
+        }
+      }
+    } else {
+      // eslint-disable-next-line guard-for-in
+      for (tmp in val) {
+        if (tmp && val[tmp]) {
+          if (str) {
+            str += ' ';
+          }
+
+          str += tmp;
+        }
+      }
+    }
+  }
+  return str;
+};
+
+function cnb() {
+  var l = arguments.length;
+  var i = 0;
+  var n;
+  var tmp;
+  var str = '';
+
+  while (i < l) {
+    n = arguments[i++];
+
+    if (n) {
+      tmp = toClassName(n);
+
+      if (tmp) {
+        if (str) {
+          str += ' ';
+        }
+
+        str += tmp;
+      }
+    }
+  }
+
+  return str;
+}
+},{}],"../../node_modules/cnbuilder/esm/dcnb.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.dcnb = dcnb;
+var SPACE_REGEX = /\s+/;
+var create = Object.create;
+var isArray = Array.isArray;
+/* istanbul ignore next */
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+
+function Storage() {}
+/* istanbul ignore next */
+
+
+Storage.prototype = create(null);
+
+function addVal(val, storage) {
+  if (!val) return;
+  var l;
+
+  if (typeof val === 'string') {
+    val = val.split(SPACE_REGEX);
+    l = val.length;
+
+    for (var i_1 = 0; i_1 < l; i_1++) storage[val[i_1]] = true;
+
+    return;
+  }
+
+  if (typeof val !== 'object') return;
+
+  if (isArray(val)) {
+    l = val.length; // eslint-disable-next-line @typescript-eslint/no-use-before-define
+
+    for (var i_2 = 0; i_2 < l; i_2++) addVal(val[i_2], storage);
+
+    return;
+  }
+
+  var i; // eslint-disable-next-line guard-for-in
+
+  for (i in val) storage[i] = !!val[i];
+}
+
+function dcnb() {
+  var storage = new Storage();
+  var i = 0;
+  var l = arguments.length;
+
+  while (i < l) {
+    addVal(arguments[i++], storage);
+  }
+
+  var str = '';
+
+  for (i in storage) {
+    if (storage[i] && i) {
+      if (str) {
+        str += ' ';
+      }
+
+      str += i;
+    }
+  }
+
+  return str;
+}
+},{}],"../../node_modules/cnbuilder/esm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "cnb", {
+  enumerable: true,
+  get: function () {
+    return _cnb.cnb;
+  }
+});
+Object.defineProperty(exports, "dcnb", {
+  enumerable: true,
+  get: function () {
+    return _dcnb.dcnb;
+  }
+});
+
+var _cnb = require("./cnb.js");
+
+var _dcnb = require("./dcnb.js");
+},{"./cnb.js":"../../node_modules/cnbuilder/esm/cnb.js","./dcnb.js":"../../node_modules/cnbuilder/esm/dcnb.js"}],"../../node_modules/zoom-level/dist/zoom-level.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.elementZoomLevel = t;
+exports.zoomLevel = i;
+
+function e(e, i, t, o) {
+  for (; i >= t && !e("(min-resolution: " + i / o + "dppx)").matches;) i--;
+
+  return i;
+}
+
+function i(i) {
+  if (void 0 === i && (i = window), !i) return 1;
+  if (void 0 !== i.devicePixelRatio) return i.devicePixelRatio;
+  var t = i.document.frames;
+  return void 0 !== t ? void 0 !== t.devicePixelRatio ? t.devicePixelRatio : t.screen.deviceXDPI / t.screen.systemXDPI : void 0 !== i.matchMedia ? function (i) {
+    for (var t = i.matchMedia, o = 10, n = .1, r = 1, a = o, c = 0; c < 4; c++) o = (a = 10 * e(t, o, n, r)) + 9, n = a, r *= 10;
+
+    return a / r;
+  }(i) : 1;
+}
+
+function t(e, t) {
+  var o = (e instanceof Element ? getComputedStyle(e).zoom : e.zoom) || 1;
+  return i(t) * ("string" == typeof o ? parseFloat(o) : o);
+}
+},{}],"../../node_modules/clsx/dist/clsx.m.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clsx = clsx;
+exports.default = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function r(e) {
+  var t,
+      f,
+      n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;else if ("object" == _typeof(e)) if (Array.isArray(e)) for (t = 0; t < e.length; t++) {
+    e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (t in e) {
+    e[t] && (n && (n += " "), n += t);
+  }
+  return n;
+}
+
+function clsx() {
+  for (var e, t, f = 0, n = ""; f < arguments.length;) {
+    (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
+  }
+
+  return n;
+}
+
+var _default = clsx;
+exports.default = _default;
+},{}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/shims.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.dontSetMe = dontSetMe;
+exports.findInArray = findInArray;
+exports.int = int;
+exports.isFunction = isFunction;
+exports.isNum = isNum;
+
+// @credits https://gist.github.com/rogozhnikoff/a43cfed27c41e4e68cdc
+function findInArray(array
+/*: Array<any> | TouchList*/
+, callback
+/*: Function*/
+)
+/*: any*/
+{
+  for (var i = 0, length = array.length; i < length; i++) {
+    if (callback.apply(callback, [array[i], i, array])) return array[i];
+  }
+}
+
+function isFunction(func
+/*: any*/
+)
+/*: boolean %checks*/
+{
+  // $FlowIgnore[method-unbinding]
+  return typeof func === 'function' || Object.prototype.toString.call(func) === '[object Function]';
+}
+
+function isNum(num
+/*: any*/
+)
+/*: boolean %checks*/
+{
+  return typeof num === 'number' && !isNaN(num);
+}
+
+function int(a
+/*: string*/
+)
+/*: number*/
+{
+  return parseInt(a, 10);
+}
+
+function dontSetMe(props
+/*: Object*/
+, propName
+/*: string*/
+, componentName
+/*: string*/
+)
+/*: ?Error*/
+{
+  if (props[propName]) {
+    return new Error("Invalid prop ".concat(propName, " passed to ").concat(componentName, " - do not set this, set it on the child."));
+  }
+}
+},{}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/getPrefix.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.browserPrefixToKey = browserPrefixToKey;
+exports.browserPrefixToStyle = browserPrefixToStyle;
+exports.default = void 0;
+exports.getPrefix = getPrefix;
+var prefixes = ['Moz', 'Webkit', 'O', 'ms'];
+
+function getPrefix()
+/*: string*/
+{
+  var _window$document, _window$document$docu;
+
+  var prop
+  /*: string*/
+  = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'transform';
+  // Ensure we're running in an environment where there is actually a global
+  // `window` obj
+  if (typeof window === 'undefined') return ''; // If we're in a pseudo-browser server-side environment, this access
+  // path may not exist, so bail out if it doesn't.
+
+  var style = (_window$document = window.document) === null || _window$document === void 0 ? void 0 : (_window$document$docu = _window$document.documentElement) === null || _window$document$docu === void 0 ? void 0 : _window$document$docu.style;
+  if (!style) return '';
+  if (prop in style) return '';
+
+  for (var i = 0; i < prefixes.length; i++) {
+    if (browserPrefixToKey(prop, prefixes[i]) in style) return prefixes[i];
+  }
+
+  return '';
+}
+
+function browserPrefixToKey(prop
+/*: string*/
+, prefix
+/*: string*/
+)
+/*: string*/
+{
+  return prefix ? "".concat(prefix).concat(kebabToTitleCase(prop)) : prop;
+}
+
+function browserPrefixToStyle(prop
+/*: string*/
+, prefix
+/*: string*/
+)
+/*: string*/
+{
+  return prefix ? "-".concat(prefix.toLowerCase(), "-").concat(prop) : prop;
+}
+
+function kebabToTitleCase(str
+/*: string*/
+)
+/*: string*/
+{
+  var out = '';
+  var shouldCapitalize = true;
+
+  for (var i = 0; i < str.length; i++) {
+    if (shouldCapitalize) {
+      out += str[i].toUpperCase();
+      shouldCapitalize = false;
+    } else if (str[i] === '-') {
+      shouldCapitalize = true;
+    } else {
+      out += str[i];
+    }
+  }
+
+  return out;
+} // Default export is the prefix itself, like 'Moz', 'Webkit', etc
+// Note that you may have to re-test for certain things; for instance, Chrome 50
+// can handle unprefixed `transform`, but not unprefixed `user-select`
+
+
+var _default = (getPrefix()
+/*: string*/
+);
+
+exports.default = _default;
+},{}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/domFns.js":[function(require,module,exports) {
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addClassName = addClassName;
+exports.addEvent = addEvent;
+exports.addUserSelectStyles = addUserSelectStyles;
+exports.createCSSTransform = createCSSTransform;
+exports.createSVGTransform = createSVGTransform;
+exports.getTouch = getTouch;
+exports.getTouchIdentifier = getTouchIdentifier;
+exports.getTranslation = getTranslation;
+exports.innerHeight = innerHeight;
+exports.innerWidth = innerWidth;
+exports.matchesSelector = matchesSelector;
+exports.matchesSelectorAndParentsTo = matchesSelectorAndParentsTo;
+exports.offsetXYFromParent = offsetXYFromParent;
+exports.outerHeight = outerHeight;
+exports.outerWidth = outerWidth;
+exports.removeClassName = removeClassName;
+exports.removeEvent = removeEvent;
+exports.removeUserSelectStyles = removeUserSelectStyles;
+
+var _shims = require("./shims");
+
+var _getPrefix = _interopRequireWildcard(require("./getPrefix"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var matchesSelectorFunc = '';
+
+function matchesSelector(el
+/*: Node*/
+, selector
+/*: string*/
+)
+/*: boolean*/
+{
+  if (!matchesSelectorFunc) {
+    matchesSelectorFunc = (0, _shims.findInArray)(['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector', 'oMatchesSelector'], function (method) {
+      // $FlowIgnore: Doesn't think elements are indexable
+      return (0, _shims.isFunction)(el[method]);
+    });
+  } // Might not be found entirely (not an Element?) - in that case, bail
+  // $FlowIgnore: Doesn't think elements are indexable
+
+
+  if (!(0, _shims.isFunction)(el[matchesSelectorFunc])) return false; // $FlowIgnore: Doesn't think elements are indexable
+
+  return el[matchesSelectorFunc](selector);
+} // Works up the tree to the draggable itself attempting to match selector.
+
+
+function matchesSelectorAndParentsTo(el
+/*: Node*/
+, selector
+/*: string*/
+, baseNode
+/*: Node*/
+)
+/*: boolean*/
+{
+  var node = el;
+
+  do {
+    if (matchesSelector(node, selector)) return true;
+    if (node === baseNode) return false;
+    node = node.parentNode;
+  } while (node);
+
+  return false;
+}
+
+function addEvent(el
+/*: ?Node*/
+, event
+/*: string*/
+, handler
+/*: Function*/
+, inputOptions
+/*: Object*/
+)
+/*: void*/
+{
+  if (!el) return;
+
+  var options = _objectSpread({
+    capture: true
+  }, inputOptions); // $FlowIgnore[method-unbinding]
+
+
+  if (el.addEventListener) {
+    el.addEventListener(event, handler, options);
+  } else if (el.attachEvent) {
+    el.attachEvent('on' + event, handler);
+  } else {
+    // $FlowIgnore: Doesn't think elements are indexable
+    el['on' + event] = handler;
+  }
+}
+
+function removeEvent(el
+/*: ?Node*/
+, event
+/*: string*/
+, handler
+/*: Function*/
+, inputOptions
+/*: Object*/
+)
+/*: void*/
+{
+  if (!el) return;
+
+  var options = _objectSpread({
+    capture: true
+  }, inputOptions); // $FlowIgnore[method-unbinding]
+
+
+  if (el.removeEventListener) {
+    el.removeEventListener(event, handler, options);
+  } else if (el.detachEvent) {
+    el.detachEvent('on' + event, handler);
+  } else {
+    // $FlowIgnore: Doesn't think elements are indexable
+    el['on' + event] = null;
+  }
+}
+
+function outerHeight(node
+/*: HTMLElement*/
+)
+/*: number*/
+{
+  // This is deliberately excluding margin for our calculations, since we are using
+  // offsetTop which is including margin. See getBoundPosition
+  var height = node.clientHeight;
+  var computedStyle = node.ownerDocument.defaultView.getComputedStyle(node);
+  height += (0, _shims.int)(computedStyle.borderTopWidth);
+  height += (0, _shims.int)(computedStyle.borderBottomWidth);
+  return height;
+}
+
+function outerWidth(node
+/*: HTMLElement*/
+)
+/*: number*/
+{
+  // This is deliberately excluding margin for our calculations, since we are using
+  // offsetLeft which is including margin. See getBoundPosition
+  var width = node.clientWidth;
+  var computedStyle = node.ownerDocument.defaultView.getComputedStyle(node);
+  width += (0, _shims.int)(computedStyle.borderLeftWidth);
+  width += (0, _shims.int)(computedStyle.borderRightWidth);
+  return width;
+}
+
+function innerHeight(node
+/*: HTMLElement*/
+)
+/*: number*/
+{
+  var height = node.clientHeight;
+  var computedStyle = node.ownerDocument.defaultView.getComputedStyle(node);
+  height -= (0, _shims.int)(computedStyle.paddingTop);
+  height -= (0, _shims.int)(computedStyle.paddingBottom);
+  return height;
+}
+
+function innerWidth(node
+/*: HTMLElement*/
+)
+/*: number*/
+{
+  var width = node.clientWidth;
+  var computedStyle = node.ownerDocument.defaultView.getComputedStyle(node);
+  width -= (0, _shims.int)(computedStyle.paddingLeft);
+  width -= (0, _shims.int)(computedStyle.paddingRight);
+  return width;
+}
+/*:: interface EventWithOffset {
+  clientX: number, clientY: number
+}*/
+
+
+// Get from offsetParent
+function offsetXYFromParent(evt
+/*: EventWithOffset*/
+, offsetParent
+/*: HTMLElement*/
+, scale
+/*: number*/
+)
+/*: ControlPosition*/
+{
+  var isBody = offsetParent === offsetParent.ownerDocument.body;
+  var offsetParentRect = isBody ? {
+    left: 0,
+    top: 0
+  } : offsetParent.getBoundingClientRect();
+  var x = (evt.clientX + offsetParent.scrollLeft - offsetParentRect.left) / scale;
+  var y = (evt.clientY + offsetParent.scrollTop - offsetParentRect.top) / scale;
+  return {
+    x: x,
+    y: y
+  };
+}
+
+function createCSSTransform(controlPos
+/*: ControlPosition*/
+, positionOffset
+/*: PositionOffsetControlPosition*/
+)
+/*: Object*/
+{
+  var translation = getTranslation(controlPos, positionOffset, 'px');
+  return _defineProperty({}, (0, _getPrefix.browserPrefixToKey)('transform', _getPrefix.default), translation);
+}
+
+function createSVGTransform(controlPos
+/*: ControlPosition*/
+, positionOffset
+/*: PositionOffsetControlPosition*/
+)
+/*: string*/
+{
+  var translation = getTranslation(controlPos, positionOffset, '');
+  return translation;
+}
+
+function getTranslation(_ref2, positionOffset
+/*: PositionOffsetControlPosition*/
+, unitSuffix
+/*: string*/
+)
+/*: string*/
+{
+  var x = _ref2.x,
+      y = _ref2.y;
+  var translation = "translate(".concat(x).concat(unitSuffix, ",").concat(y).concat(unitSuffix, ")");
+
+  if (positionOffset) {
+    var defaultX = "".concat(typeof positionOffset.x === 'string' ? positionOffset.x : positionOffset.x + unitSuffix);
+    var defaultY = "".concat(typeof positionOffset.y === 'string' ? positionOffset.y : positionOffset.y + unitSuffix);
+    translation = "translate(".concat(defaultX, ", ").concat(defaultY, ")") + translation;
+  }
+
+  return translation;
+}
+
+function getTouch(e
+/*: MouseTouchEvent*/
+, identifier
+/*: number*/
+)
+/*: ?{clientX: number, clientY: number}*/
+{
+  return e.targetTouches && (0, _shims.findInArray)(e.targetTouches, function (t) {
+    return identifier === t.identifier;
+  }) || e.changedTouches && (0, _shims.findInArray)(e.changedTouches, function (t) {
+    return identifier === t.identifier;
+  });
+}
+
+function getTouchIdentifier(e
+/*: MouseTouchEvent*/
+)
+/*: ?number*/
+{
+  if (e.targetTouches && e.targetTouches[0]) return e.targetTouches[0].identifier;
+  if (e.changedTouches && e.changedTouches[0]) return e.changedTouches[0].identifier;
+} // User-select Hacks:
+//
+// Useful for preventing blue highlights all over everything when dragging.
+// Note we're passing `document` b/c we could be iframed
+
+
+function addUserSelectStyles(doc
+/*: ?Document*/
+) {
+  if (!doc) return;
+  var styleEl = doc.getElementById('react-draggable-style-el');
+
+  if (!styleEl) {
+    styleEl = doc.createElement('style');
+    styleEl.type = 'text/css';
+    styleEl.id = 'react-draggable-style-el';
+    styleEl.innerHTML = '.react-draggable-transparent-selection *::-moz-selection {all: inherit;}\n';
+    styleEl.innerHTML += '.react-draggable-transparent-selection *::selection {all: inherit;}\n';
+    doc.getElementsByTagName('head')[0].appendChild(styleEl);
+  }
+
+  if (doc.body) addClassName(doc.body, 'react-draggable-transparent-selection');
+}
+
+function removeUserSelectStyles(doc
+/*: ?Document*/
+) {
+  if (!doc) return;
+
+  try {
+    if (doc.body) removeClassName(doc.body, 'react-draggable-transparent-selection'); // $FlowIgnore: IE
+
+    if (doc.selection) {
+      // $FlowIgnore: IE
+      doc.selection.empty();
+    } else {
+      // Remove selection caused by scroll, unless it's a focused input
+      // (we use doc.defaultView in case we're in an iframe)
+      var selection = (doc.defaultView || window).getSelection();
+
+      if (selection && selection.type !== 'Caret') {
+        selection.removeAllRanges();
+      }
+    }
+  } catch (e) {// probably IE
+  }
+}
+
+function addClassName(el
+/*: HTMLElement*/
+, className
+/*: string*/
+) {
+  if (el.classList) {
+    el.classList.add(className);
+  } else {
+    if (!el.className.match(new RegExp("(?:^|\\s)".concat(className, "(?!\\S)")))) {
+      el.className += " ".concat(className);
+    }
+  }
+}
+
+function removeClassName(el
+/*: HTMLElement*/
+, className
+/*: string*/
+) {
+  if (el.classList) {
+    el.classList.remove(className);
+  } else {
+    el.className = el.className.replace(new RegExp("(?:^|\\s)".concat(className, "(?!\\S)"), 'g'), '');
+  }
+}
+},{"./shims":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/shims.js","./getPrefix":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/getPrefix.js"}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/positionFns.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.canDragX = canDragX;
+exports.canDragY = canDragY;
+exports.createCoreData = createCoreData;
+exports.createDraggableData = createDraggableData;
+exports.getBoundPosition = getBoundPosition;
+exports.getControlPosition = getControlPosition;
+exports.snapToGrid = snapToGrid;
+
+var _shims = require("./shims");
+
+var _domFns = require("./domFns");
+
+function getBoundPosition(draggable
+/*: Draggable*/
+, x
+/*: number*/
+, y
+/*: number*/
+)
+/*: [number, number]*/
+{
+  // If no bounds, short-circuit and move on
+  if (!draggable.props.bounds) return [x, y]; // Clone new bounds
+
+  var bounds = draggable.props.bounds;
+  bounds = typeof bounds === 'string' ? bounds : cloneBounds(bounds);
+  var node = findDOMNode(draggable);
+
+  if (typeof bounds === 'string') {
+    var ownerDocument = node.ownerDocument;
+    var ownerWindow = ownerDocument.defaultView;
+    var boundNode;
+
+    if (bounds === 'parent') {
+      boundNode = node.parentNode;
+    } else {
+      boundNode = ownerDocument.querySelector(bounds);
+    }
+
+    if (!(boundNode instanceof ownerWindow.HTMLElement)) {
+      throw new Error('Bounds selector "' + bounds + '" could not find an element.');
+    }
+
+    var boundNodeEl
+    /*: HTMLElement*/
+    = boundNode; // for Flow, can't seem to refine correctly
+
+    var nodeStyle = ownerWindow.getComputedStyle(node);
+    var boundNodeStyle = ownerWindow.getComputedStyle(boundNodeEl); // Compute bounds. This is a pain with padding and offsets but this gets it exactly right.
+
+    bounds = {
+      left: -node.offsetLeft + (0, _shims.int)(boundNodeStyle.paddingLeft) + (0, _shims.int)(nodeStyle.marginLeft),
+      top: -node.offsetTop + (0, _shims.int)(boundNodeStyle.paddingTop) + (0, _shims.int)(nodeStyle.marginTop),
+      right: (0, _domFns.innerWidth)(boundNodeEl) - (0, _domFns.outerWidth)(node) - node.offsetLeft + (0, _shims.int)(boundNodeStyle.paddingRight) - (0, _shims.int)(nodeStyle.marginRight),
+      bottom: (0, _domFns.innerHeight)(boundNodeEl) - (0, _domFns.outerHeight)(node) - node.offsetTop + (0, _shims.int)(boundNodeStyle.paddingBottom) - (0, _shims.int)(nodeStyle.marginBottom)
+    };
+  } // Keep x and y below right and bottom limits...
+
+
+  if ((0, _shims.isNum)(bounds.right)) x = Math.min(x, bounds.right);
+  if ((0, _shims.isNum)(bounds.bottom)) y = Math.min(y, bounds.bottom); // But above left and top limits.
+
+  if ((0, _shims.isNum)(bounds.left)) x = Math.max(x, bounds.left);
+  if ((0, _shims.isNum)(bounds.top)) y = Math.max(y, bounds.top);
+  return [x, y];
+}
+
+function snapToGrid(grid
+/*: [number, number]*/
+, pendingX
+/*: number*/
+, pendingY
+/*: number*/
+)
+/*: [number, number]*/
+{
+  var x = Math.round(pendingX / grid[0]) * grid[0];
+  var y = Math.round(pendingY / grid[1]) * grid[1];
+  return [x, y];
+}
+
+function canDragX(draggable
+/*: Draggable*/
+)
+/*: boolean*/
+{
+  return draggable.props.axis === 'both' || draggable.props.axis === 'x';
+}
+
+function canDragY(draggable
+/*: Draggable*/
+)
+/*: boolean*/
+{
+  return draggable.props.axis === 'both' || draggable.props.axis === 'y';
+} // Get {x, y} positions from event.
+
+
+function getControlPosition(e
+/*: MouseTouchEvent*/
+, touchIdentifier
+/*: ?number*/
+, draggableCore
+/*: DraggableCore*/
+)
+/*: ?ControlPosition*/
+{
+  var touchObj = typeof touchIdentifier === 'number' ? (0, _domFns.getTouch)(e, touchIdentifier) : null;
+  if (typeof touchIdentifier === 'number' && !touchObj) return null; // not the right touch
+
+  var node = findDOMNode(draggableCore); // User can provide an offsetParent if desired.
+
+  var offsetParent = draggableCore.props.offsetParent || node.offsetParent || node.ownerDocument.body;
+  return (0, _domFns.offsetXYFromParent)(touchObj || e, offsetParent, draggableCore.props.scale);
+} // Create an data object exposed by <DraggableCore>'s events
+
+
+function createCoreData(draggable
+/*: DraggableCore*/
+, x
+/*: number*/
+, y
+/*: number*/
+)
+/*: DraggableData*/
+{
+  var state = draggable.state;
+  var isStart = !(0, _shims.isNum)(state.lastX);
+  var node = findDOMNode(draggable);
+
+  if (isStart) {
+    // If this is our first move, use the x and y as last coords.
+    return {
+      node: node,
+      deltaX: 0,
+      deltaY: 0,
+      lastX: x,
+      lastY: y,
+      x: x,
+      y: y
+    };
+  } else {
+    // Otherwise calculate proper values.
+    return {
+      node: node,
+      deltaX: x - state.lastX,
+      deltaY: y - state.lastY,
+      lastX: state.lastX,
+      lastY: state.lastY,
+      x: x,
+      y: y
+    };
+  }
+} // Create an data exposed by <Draggable>'s events
+
+
+function createDraggableData(draggable
+/*: Draggable*/
+, coreData
+/*: DraggableData*/
+)
+/*: DraggableData*/
+{
+  var scale = draggable.props.scale;
+  return {
+    node: coreData.node,
+    x: draggable.state.x + coreData.deltaX / scale,
+    y: draggable.state.y + coreData.deltaY / scale,
+    deltaX: coreData.deltaX / scale,
+    deltaY: coreData.deltaY / scale,
+    lastX: draggable.state.x,
+    lastY: draggable.state.y
+  };
+} // A lot faster than stringify/parse
+
+
+function cloneBounds(bounds
+/*: Bounds*/
+)
+/*: Bounds*/
+{
+  return {
+    left: bounds.left,
+    top: bounds.top,
+    right: bounds.right,
+    bottom: bounds.bottom
+  };
+}
+
+function findDOMNode(draggable
+/*: Draggable | DraggableCore*/
+)
+/*: HTMLElement*/
+{
+  var node = draggable.findDOMNode();
+
+  if (!node) {
+    throw new Error('<DraggableCore>: Unmounted during event!');
+  } // $FlowIgnore we can't assert on HTMLElement due to tests... FIXME
+
+
+  return node;
+}
+},{"./shims":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/shims.js","./domFns":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/domFns.js"}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/log.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = log;
+
+/*eslint no-console:0*/
+function log() {
+  var _console;
+
+  if (undefined) (_console = console).log.apply(_console, arguments);
+}
+},{}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/DraggableCore.js":[function(require,module,exports) {
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+var _domFns = require("./utils/domFns");
+
+var _positionFns = require("./utils/positionFns");
+
+var _shims = require("./utils/shims");
+
+var _log = _interopRequireDefault(require("./utils/log"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// Simple abstraction for dragging events names.
+var eventsFor = {
+  touch: {
+    start: 'touchstart',
+    move: 'touchmove',
+    stop: 'touchend'
+  },
+  mouse: {
+    start: 'mousedown',
+    move: 'mousemove',
+    stop: 'mouseup'
+  }
+}; // Default to mouse events.
+
+var dragEventFor = eventsFor.mouse;
+/*:: type DraggableCoreState = {
+  dragging: boolean,
+  lastX: number,
+  lastY: number,
+  touchIdentifier: ?number
+};*/
+
+/*:: export type DraggableData = {
+  node: HTMLElement,
+  x: number, y: number,
+  deltaX: number, deltaY: number,
+  lastX: number, lastY: number,
+};*/
+
+/*:: export type DraggableEventHandler = (e: MouseEvent, data: DraggableData) => void | false;*/
+
+/*:: export type ControlPosition = {x: number, y: number};*/
+
+/*:: export type PositionOffsetControlPosition = {x: number|string, y: number|string};*/
+
+/*:: export type DraggableCoreDefaultProps = {
+  allowAnyClick: boolean,
+  disabled: boolean,
+  enableUserSelectHack: boolean,
+  onStart: DraggableEventHandler,
+  onDrag: DraggableEventHandler,
+  onStop: DraggableEventHandler,
+  onMouseDown: (e: MouseEvent) => void,
+  scale: number,
+};*/
+
+/*:: export type DraggableCoreProps = {
+  ...DraggableCoreDefaultProps,
+  cancel: string,
+  children: ReactElement<any>,
+  offsetParent: HTMLElement,
+  grid: [number, number],
+  handle: string,
+  nodeRef?: ?React.ElementRef<any>,
+};*/
+
+//
+// Define <DraggableCore>.
+//
+// <DraggableCore> is for advanced usage of <Draggable>. It maintains minimal internal state so it can
+// work well with libraries that require more control over the element.
+//
+var DraggableCore = /*#__PURE__*/function (_React$Component) {
+  _inherits(DraggableCore, _React$Component);
+
+  var _super = _createSuper(DraggableCore);
+
+  function DraggableCore() {
+    var _this;
+
+    _classCallCheck(this, DraggableCore);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      dragging: false,
+      // Used while dragging to determine deltas.
+      lastX: NaN,
+      lastY: NaN,
+      touchIdentifier: null
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "mounted", false);
+
+    _defineProperty(_assertThisInitialized(_this), "handleDragStart", function (e) {
+      // Make it possible to attach event handlers on top of this one.
+      _this.props.onMouseDown(e); // Only accept left-clicks.
+
+
+      if (!_this.props.allowAnyClick && typeof e.button === 'number' && e.button !== 0) return false; // Get nodes. Be sure to grab relative document (could be iframed)
+
+      var thisNode = _this.findDOMNode();
+
+      if (!thisNode || !thisNode.ownerDocument || !thisNode.ownerDocument.body) {
+        throw new Error('<DraggableCore> not mounted on DragStart!');
+      }
+
+      var ownerDocument = thisNode.ownerDocument; // Short circuit if handle or cancel prop was provided and selector doesn't match.
+
+      if (_this.props.disabled || !(e.target instanceof ownerDocument.defaultView.Node) || _this.props.handle && !(0, _domFns.matchesSelectorAndParentsTo)(e.target, _this.props.handle, thisNode) || _this.props.cancel && (0, _domFns.matchesSelectorAndParentsTo)(e.target, _this.props.cancel, thisNode)) {
+        return;
+      } // Prevent scrolling on mobile devices, like ipad/iphone.
+      // Important that this is after handle/cancel.
+
+
+      if (e.type === 'touchstart') e.preventDefault(); // Set touch identifier in component state if this is a touch event. This allows us to
+      // distinguish between individual touches on multitouch screens by identifying which
+      // touchpoint was set to this element.
+
+      var touchIdentifier = (0, _domFns.getTouchIdentifier)(e);
+
+      _this.setState({
+        touchIdentifier: touchIdentifier
+      }); // Get the current drag point from the event. This is used as the offset.
+
+
+      var position = (0, _positionFns.getControlPosition)(e, touchIdentifier, _assertThisInitialized(_this));
+      if (position == null) return; // not possible but satisfies flow
+
+      var x = position.x,
+          y = position.y; // Create an event object with all the data parents need to make a decision here.
+
+      var coreEvent = (0, _positionFns.createCoreData)(_assertThisInitialized(_this), x, y);
+      (0, _log.default)('DraggableCore: handleDragStart: %j', coreEvent); // Call event handler. If it returns explicit false, cancel.
+
+      (0, _log.default)('calling', _this.props.onStart);
+
+      var shouldUpdate = _this.props.onStart(e, coreEvent);
+
+      if (shouldUpdate === false || _this.mounted === false) return; // Add a style to the body to disable user-select. This prevents text from
+      // being selected all over the page.
+
+      if (_this.props.enableUserSelectHack) (0, _domFns.addUserSelectStyles)(ownerDocument); // Initiate dragging. Set the current x and y as offsets
+      // so we know how much we've moved during the drag. This allows us
+      // to drag elements around even if they have been moved, without issue.
+
+      _this.setState({
+        dragging: true,
+        lastX: x,
+        lastY: y
+      }); // Add events to the document directly so we catch when the user's mouse/touch moves outside of
+      // this element. We use different events depending on whether or not we have detected that this
+      // is a touch-capable device.
+
+
+      (0, _domFns.addEvent)(ownerDocument, dragEventFor.move, _this.handleDrag);
+      (0, _domFns.addEvent)(ownerDocument, dragEventFor.stop, _this.handleDragStop);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleDrag", function (e) {
+      // Get the current drag point from the event. This is used as the offset.
+      var position = (0, _positionFns.getControlPosition)(e, _this.state.touchIdentifier, _assertThisInitialized(_this));
+      if (position == null) return;
+      var x = position.x,
+          y = position.y; // Snap to grid if prop has been provided
+
+      if (Array.isArray(_this.props.grid)) {
+        var deltaX = x - _this.state.lastX,
+            deltaY = y - _this.state.lastY;
+
+        var _snapToGrid = (0, _positionFns.snapToGrid)(_this.props.grid, deltaX, deltaY);
+
+        var _snapToGrid2 = _slicedToArray(_snapToGrid, 2);
+
+        deltaX = _snapToGrid2[0];
+        deltaY = _snapToGrid2[1];
+        if (!deltaX && !deltaY) return; // skip useless drag
+
+        x = _this.state.lastX + deltaX, y = _this.state.lastY + deltaY;
+      }
+
+      var coreEvent = (0, _positionFns.createCoreData)(_assertThisInitialized(_this), x, y);
+      (0, _log.default)('DraggableCore: handleDrag: %j', coreEvent); // Call event handler. If it returns explicit false, trigger end.
+
+      var shouldUpdate = _this.props.onDrag(e, coreEvent);
+
+      if (shouldUpdate === false || _this.mounted === false) {
+        try {
+          // $FlowIgnore
+          _this.handleDragStop(new MouseEvent('mouseup'));
+        } catch (err) {
+          // Old browsers
+          var event = ((document.createEvent('MouseEvents')
+          /*: any*/
+          )
+          /*: MouseTouchEvent*/
+          ); // I see why this insanity was deprecated
+          // $FlowIgnore
+
+          event.initMouseEvent('mouseup', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+          _this.handleDragStop(event);
+        }
+
+        return;
+      }
+
+      _this.setState({
+        lastX: x,
+        lastY: y
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleDragStop", function (e) {
+      if (!_this.state.dragging) return;
+      var position = (0, _positionFns.getControlPosition)(e, _this.state.touchIdentifier, _assertThisInitialized(_this));
+      if (position == null) return;
+      var x = position.x,
+          y = position.y; // Snap to grid if prop has been provided
+
+      if (Array.isArray(_this.props.grid)) {
+        var deltaX = x - _this.state.lastX || 0;
+        var deltaY = y - _this.state.lastY || 0;
+
+        var _snapToGrid3 = (0, _positionFns.snapToGrid)(_this.props.grid, deltaX, deltaY);
+
+        var _snapToGrid4 = _slicedToArray(_snapToGrid3, 2);
+
+        deltaX = _snapToGrid4[0];
+        deltaY = _snapToGrid4[1];
+        x = _this.state.lastX + deltaX, y = _this.state.lastY + deltaY;
+      }
+
+      var coreEvent = (0, _positionFns.createCoreData)(_assertThisInitialized(_this), x, y); // Call event handler
+
+      var shouldContinue = _this.props.onStop(e, coreEvent);
+
+      if (shouldContinue === false || _this.mounted === false) return false;
+
+      var thisNode = _this.findDOMNode();
+
+      if (thisNode) {
+        // Remove user-select hack
+        if (_this.props.enableUserSelectHack) (0, _domFns.removeUserSelectStyles)(thisNode.ownerDocument);
+      }
+
+      (0, _log.default)('DraggableCore: handleDragStop: %j', coreEvent); // Reset the el.
+
+      _this.setState({
+        dragging: false,
+        lastX: NaN,
+        lastY: NaN
+      });
+
+      if (thisNode) {
+        // Remove event handlers
+        (0, _log.default)('DraggableCore: Removing handlers');
+        (0, _domFns.removeEvent)(thisNode.ownerDocument, dragEventFor.move, _this.handleDrag);
+        (0, _domFns.removeEvent)(thisNode.ownerDocument, dragEventFor.stop, _this.handleDragStop);
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onMouseDown", function (e) {
+      dragEventFor = eventsFor.mouse; // on touchscreen laptops we could switch back to mouse
+
+      return _this.handleDragStart(e);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onMouseUp", function (e) {
+      dragEventFor = eventsFor.mouse;
+      return _this.handleDragStop(e);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onTouchStart", function (e) {
+      // We're on a touch device now, so change the event handlers
+      dragEventFor = eventsFor.touch;
+      return _this.handleDragStart(e);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onTouchEnd", function (e) {
+      // We're on a touch device now, so change the event handlers
+      dragEventFor = eventsFor.touch;
+      return _this.handleDragStop(e);
+    });
+
+    return _this;
+  }
+
+  _createClass(DraggableCore, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.mounted = true; // Touch handlers must be added with {passive: false} to be cancelable.
+      // https://developers.google.com/web/updates/2017/01/scrolling-intervention
+
+      var thisNode = this.findDOMNode();
+
+      if (thisNode) {
+        (0, _domFns.addEvent)(thisNode, eventsFor.touch.start, this.onTouchStart, {
+          passive: false
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.mounted = false; // Remove any leftover event handlers. Remove both touch and mouse handlers in case
+      // some browser quirk caused a touch event to fire during a mouse move, or vice versa.
+
+      var thisNode = this.findDOMNode();
+
+      if (thisNode) {
+        var ownerDocument = thisNode.ownerDocument;
+        (0, _domFns.removeEvent)(ownerDocument, eventsFor.mouse.move, this.handleDrag);
+        (0, _domFns.removeEvent)(ownerDocument, eventsFor.touch.move, this.handleDrag);
+        (0, _domFns.removeEvent)(ownerDocument, eventsFor.mouse.stop, this.handleDragStop);
+        (0, _domFns.removeEvent)(ownerDocument, eventsFor.touch.stop, this.handleDragStop);
+        (0, _domFns.removeEvent)(thisNode, eventsFor.touch.start, this.onTouchStart, {
+          passive: false
+        });
+        if (this.props.enableUserSelectHack) (0, _domFns.removeUserSelectStyles)(ownerDocument);
+      }
+    } // React Strict Mode compatibility: if `nodeRef` is passed, we will use it instead of trying to find
+    // the underlying DOM node ourselves. See the README for more information.
+
+  }, {
+    key: "findDOMNode",
+    value: function findDOMNode()
+    /*: ?HTMLElement*/
+    {
+      var _this$props, _this$props2, _this$props2$nodeRef;
+
+      return (_this$props = this.props) !== null && _this$props !== void 0 && _this$props.nodeRef ? (_this$props2 = this.props) === null || _this$props2 === void 0 ? void 0 : (_this$props2$nodeRef = _this$props2.nodeRef) === null || _this$props2$nodeRef === void 0 ? void 0 : _this$props2$nodeRef.current : _reactDom.default.findDOMNode(this);
+    }
+  }, {
+    key: "render",
+    value: function render()
+    /*: React.Element<any>*/
+    {
+      // Reuse the child provided
+      // This makes it flexible to use whatever element is wanted (div, ul, etc)
+      return /*#__PURE__*/React.cloneElement(React.Children.only(this.props.children), {
+        // Note: mouseMove handler is attached to document so it will still function
+        // when the user drags quickly and leaves the bounds of the element.
+        onMouseDown: this.onMouseDown,
+        onMouseUp: this.onMouseUp,
+        // onTouchStart is added on `componentDidMount` so they can be added with
+        // {passive: false}, which allows it to cancel. See
+        // https://developers.google.com/web/updates/2017/01/scrolling-intervention
+        onTouchEnd: this.onTouchEnd
+      });
+    }
+  }]);
+
+  return DraggableCore;
+}(React.Component);
+
+exports.default = DraggableCore;
+
+_defineProperty(DraggableCore, "displayName", 'DraggableCore');
+
+_defineProperty(DraggableCore, "propTypes", {
+  /**
+   * `allowAnyClick` allows dragging using any mouse button.
+   * By default, we only accept the left button.
+   *
+   * Defaults to `false`.
+   */
+  allowAnyClick: _propTypes.default.bool,
+
+  /**
+   * `disabled`, if true, stops the <Draggable> from dragging. All handlers,
+   * with the exception of `onMouseDown`, will not fire.
+   */
+  disabled: _propTypes.default.bool,
+
+  /**
+   * By default, we add 'user-select:none' attributes to the document body
+   * to prevent ugly text selection during drag. If this is causing problems
+   * for your app, set this to `false`.
+   */
+  enableUserSelectHack: _propTypes.default.bool,
+
+  /**
+   * `offsetParent`, if set, uses the passed DOM node to compute drag offsets
+   * instead of using the parent node.
+   */
+  offsetParent: function offsetParent(props
+  /*: DraggableCoreProps*/
+  , propName
+  /*: $Keys<DraggableCoreProps>*/
+  ) {
+    if (props[propName] && props[propName].nodeType !== 1) {
+      throw new Error('Draggable\'s offsetParent must be a DOM Node.');
+    }
+  },
+
+  /**
+   * `grid` specifies the x and y that dragging should snap to.
+   */
+  grid: _propTypes.default.arrayOf(_propTypes.default.number),
+
+  /**
+   * `handle` specifies a selector to be used as the handle that initiates drag.
+   *
+   * Example:
+   *
+   * ```jsx
+   *   let App = React.createClass({
+   *       render: function () {
+   *         return (
+   *            <Draggable handle=".handle">
+   *              <div>
+   *                  <div className="handle">Click me to drag</div>
+   *                  <div>This is some other content</div>
+   *              </div>
+   *           </Draggable>
+   *         );
+   *       }
+   *   });
+   * ```
+   */
+  handle: _propTypes.default.string,
+
+  /**
+   * `cancel` specifies a selector to be used to prevent drag initialization.
+   *
+   * Example:
+   *
+   * ```jsx
+   *   let App = React.createClass({
+   *       render: function () {
+   *           return(
+   *               <Draggable cancel=".cancel">
+   *                   <div>
+   *                     <div className="cancel">You can't drag from here</div>
+   *                     <div>Dragging here works fine</div>
+   *                   </div>
+   *               </Draggable>
+   *           );
+   *       }
+   *   });
+   * ```
+   */
+  cancel: _propTypes.default.string,
+
+  /* If running in React Strict mode, ReactDOM.findDOMNode() is deprecated.
+   * Unfortunately, in order for <Draggable> to work properly, we need raw access
+   * to the underlying DOM node. If you want to avoid the warning, pass a `nodeRef`
+   * as in this example:
+   *
+   * function MyComponent() {
+   *   const nodeRef = React.useRef(null);
+   *   return (
+   *     <Draggable nodeRef={nodeRef}>
+   *       <div ref={nodeRef}>Example Target</div>
+   *     </Draggable>
+   *   );
+   * }
+   *
+   * This can be used for arbitrarily nested components, so long as the ref ends up
+   * pointing to the actual child DOM node and not a custom component.
+   */
+  nodeRef: _propTypes.default.object,
+
+  /**
+   * Called when dragging starts.
+   * If this function returns the boolean false, dragging will be canceled.
+   */
+  onStart: _propTypes.default.func,
+
+  /**
+   * Called while dragging.
+   * If this function returns the boolean false, dragging will be canceled.
+   */
+  onDrag: _propTypes.default.func,
+
+  /**
+   * Called when dragging stops.
+   * If this function returns the boolean false, the drag will remain active.
+   */
+  onStop: _propTypes.default.func,
+
+  /**
+   * A workaround option which can be passed if onMouseDown needs to be accessed,
+   * since it'll always be blocked (as there is internal use of onMouseDown)
+   */
+  onMouseDown: _propTypes.default.func,
+
+  /**
+   * `scale`, if set, applies scaling while dragging an element
+   */
+  scale: _propTypes.default.number,
+
+  /**
+   * These properties should be defined on the child, not here.
+   */
+  className: _shims.dontSetMe,
+  style: _shims.dontSetMe,
+  transform: _shims.dontSetMe
+});
+
+_defineProperty(DraggableCore, "defaultProps", {
+  allowAnyClick: false,
+  // by default only accept left click
+  disabled: false,
+  enableUserSelectHack: true,
+  onStart: function onStart() {},
+  onDrag: function onDrag() {},
+  onStop: function onStop() {},
+  onMouseDown: function onMouseDown() {},
+  scale: 1
+});
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-dom":"../../node_modules/react-dom/index.js","./utils/domFns":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/domFns.js","./utils/positionFns":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/positionFns.js","./utils/shims":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/shims.js","./utils/log":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/log.js"}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/Draggable.js":[function(require,module,exports) {
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "DraggableCore", {
+  enumerable: true,
+  get: function get() {
+    return _DraggableCore.default;
+  }
+});
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+var _clsx2 = _interopRequireDefault(require("clsx"));
+
+var _domFns = require("./utils/domFns");
+
+var _positionFns = require("./utils/positionFns");
+
+var _shims = require("./utils/shims");
+
+var _DraggableCore = _interopRequireDefault(require("./DraggableCore"));
+
+var _log = _interopRequireDefault(require("./utils/log"));
+
+var _excluded = ["axis", "bounds", "children", "defaultPosition", "defaultClassName", "defaultClassNameDragging", "defaultClassNameDragged", "position", "positionOffset", "scale"];
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+// Define <Draggable>
+//
+var Draggable = /*#__PURE__*/function (_React$Component) {
+  _inherits(Draggable, _React$Component);
+
+  var _super = _createSuper(Draggable);
+
+  function Draggable(props
+  /*: DraggableProps*/
+  ) {
+    var _this;
+
+    _classCallCheck(this, Draggable);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "onDragStart", function (e, coreData) {
+      (0, _log.default)('Draggable: onDragStart: %j', coreData); // Short-circuit if user's callback killed it.
+
+      var shouldStart = _this.props.onStart(e, (0, _positionFns.createDraggableData)(_assertThisInitialized(_this), coreData)); // Kills start event on core as well, so move handlers are never bound.
+
+
+      if (shouldStart === false) return false;
+
+      _this.setState({
+        dragging: true,
+        dragged: true
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onDrag", function (e, coreData) {
+      if (!_this.state.dragging) return false;
+      (0, _log.default)('Draggable: onDrag: %j', coreData);
+      var uiData = (0, _positionFns.createDraggableData)(_assertThisInitialized(_this), coreData);
+      var newState
+      /*: $Shape<DraggableState>*/
+      = {
+        x: uiData.x,
+        y: uiData.y
+      }; // Keep within bounds.
+
+      if (_this.props.bounds) {
+        // Save original x and y.
+        var x = newState.x,
+            y = newState.y; // Add slack to the values used to calculate bound position. This will ensure that if
+        // we start removing slack, the element won't react to it right away until it's been
+        // completely removed.
+
+        newState.x += _this.state.slackX;
+        newState.y += _this.state.slackY; // Get bound position. This will ceil/floor the x and y within the boundaries.
+
+        var _getBoundPosition = (0, _positionFns.getBoundPosition)(_assertThisInitialized(_this), newState.x, newState.y),
+            _getBoundPosition2 = _slicedToArray(_getBoundPosition, 2),
+            newStateX = _getBoundPosition2[0],
+            newStateY = _getBoundPosition2[1];
+
+        newState.x = newStateX;
+        newState.y = newStateY; // Recalculate slack by noting how much was shaved by the boundPosition handler.
+
+        newState.slackX = _this.state.slackX + (x - newState.x);
+        newState.slackY = _this.state.slackY + (y - newState.y); // Update the event we fire to reflect what really happened after bounds took effect.
+
+        uiData.x = newState.x;
+        uiData.y = newState.y;
+        uiData.deltaX = newState.x - _this.state.x;
+        uiData.deltaY = newState.y - _this.state.y;
+      } // Short-circuit if user's callback killed it.
+
+
+      var shouldUpdate = _this.props.onDrag(e, uiData);
+
+      if (shouldUpdate === false) return false;
+
+      _this.setState(newState);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onDragStop", function (e, coreData) {
+      if (!_this.state.dragging) return false; // Short-circuit if user's callback killed it.
+
+      var shouldContinue = _this.props.onStop(e, (0, _positionFns.createDraggableData)(_assertThisInitialized(_this), coreData));
+
+      if (shouldContinue === false) return false;
+      (0, _log.default)('Draggable: onDragStop: %j', coreData);
+      var newState
+      /*: $Shape<DraggableState>*/
+      = {
+        dragging: false,
+        slackX: 0,
+        slackY: 0
+      }; // If this is a controlled component, the result of this operation will be to
+      // revert back to the old position. We expect a handler on `onDragStop`, at the least.
+
+      var controlled = Boolean(_this.props.position);
+
+      if (controlled) {
+        var _this$props$position = _this.props.position,
+            x = _this$props$position.x,
+            y = _this$props$position.y;
+        newState.x = x;
+        newState.y = y;
+      }
+
+      _this.setState(newState);
+    });
+
+    _this.state = {
+      // Whether or not we are currently dragging.
+      dragging: false,
+      // Whether or not we have been dragged before.
+      dragged: false,
+      // Current transform x and y.
+      x: props.position ? props.position.x : props.defaultPosition.x,
+      y: props.position ? props.position.y : props.defaultPosition.y,
+      prevPropsPosition: _objectSpread({}, props.position),
+      // Used for compensating for out-of-bounds drags
+      slackX: 0,
+      slackY: 0,
+      // Can only determine if SVG after mounting
+      isElementSVG: false
+    };
+
+    if (props.position && !(props.onDrag || props.onStop)) {
+      // eslint-disable-next-line no-console
+      console.warn('A `position` was applied to this <Draggable>, without drag handlers. This will make this ' + 'component effectively undraggable. Please attach `onDrag` or `onStop` handlers so you can adjust the ' + '`position` of this element.');
+    }
+
+    return _this;
+  }
+
+  _createClass(Draggable, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // Check to see if the element passed is an instanceof SVGElement
+      if (typeof window.SVGElement !== 'undefined' && this.findDOMNode() instanceof window.SVGElement) {
+        this.setState({
+          isElementSVG: true
+        });
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.setState({
+        dragging: false
+      }); // prevents invariant if unmounted while dragging
+    } // React Strict Mode compatibility: if `nodeRef` is passed, we will use it instead of trying to find
+    // the underlying DOM node ourselves. See the README for more information.
+
+  }, {
+    key: "findDOMNode",
+    value: function findDOMNode()
+    /*: ?HTMLElement*/
+    {
+      var _this$props$nodeRef$c, _this$props, _this$props$nodeRef;
+
+      return (_this$props$nodeRef$c = (_this$props = this.props) === null || _this$props === void 0 ? void 0 : (_this$props$nodeRef = _this$props.nodeRef) === null || _this$props$nodeRef === void 0 ? void 0 : _this$props$nodeRef.current) !== null && _this$props$nodeRef$c !== void 0 ? _this$props$nodeRef$c : _reactDom.default.findDOMNode(this);
+    }
+  }, {
+    key: "render",
+    value: function render()
+    /*: ReactElement<any>*/
+    {
+      var _clsx;
+
+      var _this$props2 = this.props,
+          axis = _this$props2.axis,
+          bounds = _this$props2.bounds,
+          children = _this$props2.children,
+          defaultPosition = _this$props2.defaultPosition,
+          defaultClassName = _this$props2.defaultClassName,
+          defaultClassNameDragging = _this$props2.defaultClassNameDragging,
+          defaultClassNameDragged = _this$props2.defaultClassNameDragged,
+          position = _this$props2.position,
+          positionOffset = _this$props2.positionOffset,
+          scale = _this$props2.scale,
+          draggableCoreProps = _objectWithoutProperties(_this$props2, _excluded);
+
+      var style = {};
+      var svgTransform = null; // If this is controlled, we don't want to move it - unless it's dragging.
+
+      var controlled = Boolean(position);
+      var draggable = !controlled || this.state.dragging;
+      var validPosition = position || defaultPosition;
+      var transformOpts = {
+        // Set left if horizontal drag is enabled
+        x: (0, _positionFns.canDragX)(this) && draggable ? this.state.x : validPosition.x,
+        // Set top if vertical drag is enabled
+        y: (0, _positionFns.canDragY)(this) && draggable ? this.state.y : validPosition.y
+      }; // If this element was SVG, we use the `transform` attribute.
+
+      if (this.state.isElementSVG) {
+        svgTransform = (0, _domFns.createSVGTransform)(transformOpts, positionOffset);
+      } else {
+        // Add a CSS transform to move the element around. This allows us to move the element around
+        // without worrying about whether or not it is relatively or absolutely positioned.
+        // If the item you are dragging already has a transform set, wrap it in a <span> so <Draggable>
+        // has a clean slate.
+        style = (0, _domFns.createCSSTransform)(transformOpts, positionOffset);
+      } // Mark with class while dragging
+
+
+      var className = (0, _clsx2.default)(children.props.className || '', defaultClassName, (_clsx = {}, _defineProperty(_clsx, defaultClassNameDragging, this.state.dragging), _defineProperty(_clsx, defaultClassNameDragged, this.state.dragged), _clsx)); // Reuse the child provided
+      // This makes it flexible to use whatever element is wanted (div, ul, etc)
+
+      return /*#__PURE__*/React.createElement(_DraggableCore.default, _extends({}, draggableCoreProps, {
+        onStart: this.onDragStart,
+        onDrag: this.onDrag,
+        onStop: this.onDragStop
+      }), /*#__PURE__*/React.cloneElement(React.Children.only(children), {
+        className: className,
+        style: _objectSpread(_objectSpread({}, children.props.style), style),
+        transform: svgTransform
+      }));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: // React 16.3+
+    // Arity (props, state)
+    function getDerivedStateFromProps(_ref, _ref2)
+    /*: ?$Shape<DraggableState>*/
+    {
+      var position = _ref.position;
+      var prevPropsPosition = _ref2.prevPropsPosition;
+
+      // Set x/y if a new position is provided in props that is different than the previous.
+      if (position && (!prevPropsPosition || position.x !== prevPropsPosition.x || position.y !== prevPropsPosition.y)) {
+        (0, _log.default)('Draggable: getDerivedStateFromProps %j', {
+          position: position,
+          prevPropsPosition: prevPropsPosition
+        });
+        return {
+          x: position.x,
+          y: position.y,
+          prevPropsPosition: _objectSpread({}, position)
+        };
+      }
+
+      return null;
+    }
+  }]);
+
+  return Draggable;
+}(React.Component);
+
+exports.default = Draggable;
+
+_defineProperty(Draggable, "displayName", 'Draggable');
+
+_defineProperty(Draggable, "propTypes", _objectSpread(_objectSpread({}, _DraggableCore.default.propTypes), {}, {
+  /**
+   * `axis` determines which axis the draggable can move.
+   *
+   *  Note that all callbacks will still return data as normal. This only
+   *  controls flushing to the DOM.
+   *
+   * 'both' allows movement horizontally and vertically.
+   * 'x' limits movement to horizontal axis.
+   * 'y' limits movement to vertical axis.
+   * 'none' limits all movement.
+   *
+   * Defaults to 'both'.
+   */
+  axis: _propTypes.default.oneOf(['both', 'x', 'y', 'none']),
+
+  /**
+   * `bounds` determines the range of movement available to the element.
+   * Available values are:
+   *
+   * 'parent' restricts movement within the Draggable's parent node.
+   *
+   * Alternatively, pass an object with the following properties, all of which are optional:
+   *
+   * {left: LEFT_BOUND, right: RIGHT_BOUND, bottom: BOTTOM_BOUND, top: TOP_BOUND}
+   *
+   * All values are in px.
+   *
+   * Example:
+   *
+   * ```jsx
+   *   let App = React.createClass({
+   *       render: function () {
+   *         return (
+   *            <Draggable bounds={{right: 300, bottom: 300}}>
+   *              <div>Content</div>
+   *           </Draggable>
+   *         );
+   *       }
+   *   });
+   * ```
+   */
+  bounds: _propTypes.default.oneOfType([_propTypes.default.shape({
+    left: _propTypes.default.number,
+    right: _propTypes.default.number,
+    top: _propTypes.default.number,
+    bottom: _propTypes.default.number
+  }), _propTypes.default.string, _propTypes.default.oneOf([false])]),
+  defaultClassName: _propTypes.default.string,
+  defaultClassNameDragging: _propTypes.default.string,
+  defaultClassNameDragged: _propTypes.default.string,
+
+  /**
+   * `defaultPosition` specifies the x and y that the dragged item should start at
+   *
+   * Example:
+   *
+   * ```jsx
+   *      let App = React.createClass({
+   *          render: function () {
+   *              return (
+   *                  <Draggable defaultPosition={{x: 25, y: 25}}>
+   *                      <div>I start with transformX: 25px and transformY: 25px;</div>
+   *                  </Draggable>
+   *              );
+   *          }
+   *      });
+   * ```
+   */
+  defaultPosition: _propTypes.default.shape({
+    x: _propTypes.default.number,
+    y: _propTypes.default.number
+  }),
+  positionOffset: _propTypes.default.shape({
+    x: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+    y: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
+  }),
+
+  /**
+   * `position`, if present, defines the current position of the element.
+   *
+   *  This is similar to how form elements in React work - if no `position` is supplied, the component
+   *  is uncontrolled.
+   *
+   * Example:
+   *
+   * ```jsx
+   *      let App = React.createClass({
+   *          render: function () {
+   *              return (
+   *                  <Draggable position={{x: 25, y: 25}}>
+   *                      <div>I start with transformX: 25px and transformY: 25px;</div>
+   *                  </Draggable>
+   *              );
+   *          }
+   *      });
+   * ```
+   */
+  position: _propTypes.default.shape({
+    x: _propTypes.default.number,
+    y: _propTypes.default.number
+  }),
+
+  /**
+   * These properties should be defined on the child, not here.
+   */
+  className: _shims.dontSetMe,
+  style: _shims.dontSetMe,
+  transform: _shims.dontSetMe
+}));
+
+_defineProperty(Draggable, "defaultProps", _objectSpread(_objectSpread({}, _DraggableCore.default.defaultProps), {}, {
+  axis: 'both',
+  bounds: false,
+  defaultClassName: 'react-draggable',
+  defaultClassNameDragging: 'react-draggable-dragging',
+  defaultClassNameDragged: 'react-draggable-dragged',
+  defaultPosition: {
+    x: 0,
+    y: 0
+  },
+  scale: 1
+}));
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-dom":"../../node_modules/react-dom/index.js","clsx":"../../node_modules/clsx/dist/clsx.m.js","./utils/domFns":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/domFns.js","./utils/positionFns":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/positionFns.js","./utils/shims":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/shims.js","./DraggableCore":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/DraggableCore.js","./utils/log":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/utils/log.js"}],"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/cjs.js":[function(require,module,exports) {
+"use strict";
+
+var _require = require('./Draggable'),
+    Draggable = _require.default,
+    DraggableCore = _require.DraggableCore; // Previous versions of this lib exported <Draggable> as the root export. As to no-// them, or TypeScript, we export *both* as the root and as 'default'.
+// See https://github.com/mzabriskie/react-draggable/pull/254
+// and https://github.com/mzabriskie/react-draggable/issues/266
+
+
+module.exports = Draggable;
+module.exports.default = Draggable;
+module.exports.DraggableCore = DraggableCore;
+},{"./Draggable":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/Draggable.js"}],"../../node_modules/react-scrollbars-custom/dist/rsc.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.ScrollbarContext = exports.Scrollbar = void 0;
+
+var _cnbuilder = require("cnbuilder");
+
+var React = _interopRequireWildcard(require("react"));
+
+var _zoomLevel = require("zoom-level");
+
+var _reactDraggable = require("react-draggable");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+/* global Reflect, Promise */
+var extendStatics = function (d, b) {
+  extendStatics = Object.setPrototypeOf || {
+    __proto__: []
+  } instanceof Array && function (d, b) {
+    d.__proto__ = b;
+  } || function (d, b) {
+    for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+  };
+
+  return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+  if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+  extendStatics(d, b);
+
+  function __() {
+    this.constructor = d;
+  }
+
+  d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function () {
+  __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+function __rest(s, e) {
+  var t = {};
+
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+}
+
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
+}
+
+var doc = (typeof document === "undefined" ? "undefined" : _typeof(document)) === 'object' ? document : null;
+var isBrowser = typeof window !== 'undefined' && typeof navigator !== 'undefined' && typeof document !== 'undefined';
+
+var isUndef = function isUndef(v) {
+  return typeof v === 'undefined';
+};
+
+var isFun = function isFun(v) {
+  return typeof v === 'function';
+};
+
+var isNum = function isNum(v) {
+  return typeof v === 'number';
+};
+/**
+ * @description Will return renderer result if presented, div element otherwise.
+ * If renderer is presented it'll receive `elementRef` function which should be used as HTMLElement's ref.
+ *
+ * @param props {ElementPropsWithElementRefAndRenderer}
+ * @param elementRef {ElementRef}
+ */
+
+
+var renderDivWithRenderer = function renderDivWithRenderer(props, elementRef) {
+  if (isFun(props.renderer)) {
+    props.elementRef = elementRef;
+    var renderer = props.renderer;
+    delete props.renderer;
+    return renderer(props);
+  }
+
+  delete props.elementRef;
+  return React.createElement("div", __assign({}, props, {
+    ref: elementRef
+  }));
+};
+
+var getInnerSize = function getInnerSize(el, dimension, padding1, padding2) {
+  var styles = getComputedStyle(el);
+
+  if (styles.boxSizing === 'border-box') {
+    return Math.max(0, (Number.parseFloat(styles[dimension]) || 0) - (Number.parseFloat(styles[padding1]) || 0) - (Number.parseFloat(styles[padding2]) || 0));
+  }
+
+  return Number.parseFloat(styles[dimension]) || 0;
+};
+/**
+ * @description Return element's height without padding
+ */
+
+
+var getInnerHeight = function getInnerHeight(el) {
+  return getInnerSize(el, 'height', 'paddingTop', 'paddingBottom');
+};
+/**
+ * @description Return element's width without padding
+ */
+
+
+var getInnerWidth = function getInnerWidth(el) {
+  return getInnerSize(el, 'width', 'paddingLeft', 'paddingRight');
+};
+/**
+ * @description Return unique UUID v4
+ */
+
+
+var uuid = function uuid() {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  var uuid = '';
+
+  for (var i = 0; i < 32; i++) {
+    switch (i) {
+      case 8:
+      case 20:
+        {
+          uuid += "-".concat(Math.trunc(Math.random() * 16).toString(16));
+          break;
+        }
+
+      case 12:
+        {
+          uuid += '-4';
+          break;
+        }
+
+      case 16:
+        {
+          uuid += "-".concat((Math.random() * 16 | 0 & 3 | 8).toString(16));
+          break;
+        }
+
+      default:
+        {
+          uuid += Math.trunc(Math.random() * 16).toString(16);
+        }
+    }
+  }
+
+  return uuid;
+};
+/**
+ * @description Calculate thumb size for given viewport and track parameters
+ *
+ * @param {number} contentSize - Scrollable content size
+ * @param {number} viewportSize - Viewport size
+ * @param {number} trackSize - Track size thumb can move
+ * @param {number} minimalSize - Minimal thumb's size
+ * @param {number} maximalSize - Maximal thumb's size
+ */
+
+
+var calcThumbSize = function calcThumbSize(contentSize, viewportSize, trackSize, minimalSize, maximalSize) {
+  if (viewportSize >= contentSize) {
+    return 0;
+  }
+
+  var thumbSize = viewportSize / contentSize * trackSize;
+
+  if (isNum(maximalSize)) {
+    thumbSize = Math.min(maximalSize, thumbSize);
+  }
+
+  if (isNum(minimalSize)) {
+    thumbSize = Math.max(minimalSize, thumbSize);
+  }
+
+  return thumbSize;
+};
+/**
+ * @description Calculate thumb offset for given viewport, track and thumb parameters
+ *
+ * @param {number} contentSize - Scrollable content size
+ * @param {number} viewportSize - Viewport size
+ * @param {number} trackSize - Track size thumb can move
+ * @param {number} thumbSize - Thumb size
+ * @param {number} scroll - Scroll value to represent
+ */
+
+
+var calcThumbOffset = function calcThumbOffset(contentSize, viewportSize, trackSize, thumbSize, scroll) {
+  if (!scroll || !thumbSize || viewportSize >= contentSize) {
+    return 0;
+  }
+
+  return (trackSize - thumbSize) * scroll / (contentSize - viewportSize);
+};
+/**
+ * @description Calculate scroll for given viewport, track and thumb parameters
+ *
+ * @param {number} contentSize - Scrollable content size
+ * @param {number} viewportSize - Viewport size
+ * @param {number} trackSize - Track size thumb can move
+ * @param {number} thumbSize - Thumb size
+ * @param {number} thumbOffset - Thumb's offset representing the scroll
+ */
+
+
+var calcScrollForThumbOffset = function calcScrollForThumbOffset(contentSize, viewportSize, trackSize, thumbSize, thumbOffset) {
+  if (!thumbOffset || !thumbSize || viewportSize >= contentSize) {
+    return 0;
+  }
+
+  return thumbOffset * (contentSize - viewportSize) / (trackSize - thumbSize);
+};
+/**
+ * @description Returns scrollbar width specific for current environment. Can return undefined if DOM is not ready yet.
+ */
+
+
+var getScrollbarWidth = function getScrollbarWidth(force) {
+  if (force === void 0) {
+    force = false;
+  }
+
+  if (!doc) {
+    getScrollbarWidth._cache = 0;
+    return getScrollbarWidth._cache;
+  }
+
+  if (!force && !isUndef(getScrollbarWidth._cache)) {
+    return getScrollbarWidth._cache;
+  }
+
+  var el = doc.createElement('div');
+  el.setAttribute('style', 'position:absolute;width:100px;height:100px;top:-999px;left:-999px;overflow:scroll;');
+  doc.body.append(el);
+  /* istanbul ignore next */
+
+  if (el.clientWidth === 0) {
+    // Do not even cache this value because there is no calculations. Issue https://github.com/xobotyi/react-scrollbars-custom/issues/123
+    el.remove();
+    return;
+  }
+
+  getScrollbarWidth._cache = 100 - el.clientWidth;
+  el.remove();
+  return getScrollbarWidth._cache;
+};
+/**
+ * @description Detect need of horizontal scroll reverse while RTL.
+ */
+
+
+var shouldReverseRtlScroll = function shouldReverseRtlScroll(force) {
+  if (force === void 0) {
+    force = false;
+  }
+
+  if (!force && !isUndef(shouldReverseRtlScroll._cache)) {
+    return shouldReverseRtlScroll._cache;
+  }
+
+  if (!doc) {
+    shouldReverseRtlScroll._cache = false;
+    return shouldReverseRtlScroll._cache;
+  }
+
+  var el = doc.createElement('div');
+  var child = doc.createElement('div');
+  el.append(child);
+  el.setAttribute('style', 'position:absolute;width:100px;height:100px;top:-999px;left:-999px;overflow:scroll;direction:rtl');
+  child.setAttribute('style', 'width:1000px;height:1000px');
+  doc.body.append(el);
+  el.scrollLeft = -50;
+  shouldReverseRtlScroll._cache = el.scrollLeft === -50;
+  el.remove();
+  return shouldReverseRtlScroll._cache;
+};
+
+var Emittr =
+/** @class */
+function () {
+  function Emittr(maxHandlers) {
+    if (maxHandlers === void 0) {
+      maxHandlers = 10;
+    }
+
+    this.setMaxHandlers(maxHandlers);
+    this._handlers = Object.create(null);
+  }
+
+  Emittr._callEventHandlers = function (emitter, handlers, args) {
+    if (!handlers.length) {
+      return;
+    }
+
+    if (handlers.length === 1) {
+      Reflect.apply(handlers[0], emitter, args);
+      return;
+    }
+
+    handlers = __spreadArray([], handlers, true);
+    var idx;
+
+    for (idx = 0; idx < handlers.length; idx++) {
+      Reflect.apply(handlers[idx], emitter, args);
+    }
+  };
+
+  Emittr.prototype.setMaxHandlers = function (count) {
+    if (!isNum(count) || count <= 0) {
+      throw new TypeError("Expected maxHandlers to be a positive number, got '".concat(count, "' of type ").concat(_typeof(count)));
+    }
+
+    this._maxHandlers = count;
+    return this;
+  };
+
+  Emittr.prototype.getMaxHandlers = function () {
+    return this._maxHandlers;
+  };
+
+  Emittr.prototype.emit = function (name) {
+    var args = [];
+
+    for (var _i = 1; _i < arguments.length; _i++) {
+      args[_i - 1] = arguments[_i];
+    }
+
+    if (_typeof(this._handlers[name]) !== 'object' || !Array.isArray(this._handlers[name])) {
+      return false;
+    }
+
+    Emittr._callEventHandlers(this, this._handlers[name], args);
+
+    return true;
+  };
+
+  Emittr.prototype.on = function (name, handler) {
+    Emittr._addHandler(this, name, handler);
+
+    return this;
+  };
+
+  Emittr.prototype.prependOn = function (name, handler) {
+    Emittr._addHandler(this, name, handler, true);
+
+    return this;
+  };
+
+  Emittr.prototype.once = function (name, handler) {
+    if (!isFun(handler)) {
+      throw new TypeError("Expected event handler to be a function, got ".concat(_typeof(handler)));
+    }
+
+    Emittr._addHandler(this, name, this._wrapOnceHandler(name, handler));
+
+    return this;
+  };
+
+  Emittr.prototype.prependOnce = function (name, handler) {
+    if (!isFun(handler)) {
+      throw new TypeError("Expected event handler to be a function, got ".concat(_typeof(handler)));
+    }
+
+    Emittr._addHandler(this, name, this._wrapOnceHandler(name, handler), true);
+
+    return this;
+  };
+
+  Emittr.prototype.off = function (name, handler) {
+    Emittr._removeHandler(this, name, handler);
+
+    return this;
+  };
+
+  Emittr.prototype.removeAllHandlers = function () {
+    var handlers = this._handlers;
+    this._handlers = Object.create(null);
+    var removeHandlers = handlers.removeHandler;
+    delete handlers.removeHandler;
+    var idx;
+    var eventName; // eslint-disable-next-line guard-for-in,no-restricted-syntax
+
+    for (eventName in handlers) {
+      for (idx = handlers[eventName].length - 1; idx >= 0; idx--) {
+        Emittr._callEventHandlers(this, removeHandlers, [eventName, handlers[eventName][idx].handler || handlers[eventName][idx]]);
+      }
+    }
+
+    return this;
+  };
+
+  Emittr.prototype._wrapOnceHandler = function (name, handler) {
+    var onceState = {
+      fired: false,
+      handler: handler,
+      wrappedHandler: undefined,
+      emitter: this,
+      event: name
+    };
+
+    var wrappedHandler = Emittr._onceWrapper.bind(onceState);
+
+    onceState.wrappedHandler = wrappedHandler;
+    wrappedHandler.handler = handler;
+    wrappedHandler.event = name;
+    return wrappedHandler;
+  };
+
+  Emittr._addHandler = function (emitter, name, handler, prepend) {
+    if (prepend === void 0) {
+      prepend = false;
+    }
+
+    if (!isFun(handler)) {
+      throw new TypeError("Expected event handler to be a function, got ".concat(_typeof(handler)));
+    }
+
+    emitter._handlers[name] = emitter._handlers[name] || [];
+    emitter.emit('addHandler', name, handler);
+
+    if (prepend) {
+      emitter._handlers[name].unshift(handler);
+    } else {
+      emitter._handlers[name].push(handler);
+    }
+
+    return emitter;
+  };
+
+  Emittr._onceWrapper = function _onceWrapper() {
+    var args = [];
+
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+
+    if (!this.fired) {
+      this.fired = true;
+      this.emitter.off(this.event, this.wrappedHandler);
+      Reflect.apply(this.handler, this.emitter, args);
+    }
+  };
+
+  Emittr._removeHandler = function (emitter, name, handler) {
+    if (!isFun(handler)) {
+      throw new TypeError("Expected event handler to be a function, got ".concat(_typeof(handler)));
+    }
+
+    if (isUndef(emitter._handlers[name]) || !emitter._handlers[name].length) {
+      return emitter;
+    }
+
+    var idx = -1;
+
+    if (emitter._handlers[name].length === 1) {
+      if (emitter._handlers[name][0] === handler || emitter._handlers[name][0].handler === handler) {
+        idx = 0;
+        handler = emitter._handlers[name][0].handler || emitter._handlers[name][0];
+      }
+    } else {
+      for (idx = emitter._handlers[name].length - 1; idx >= 0; idx--) {
+        if (emitter._handlers[name][idx] === handler || emitter._handlers[name][idx].handler === handler) {
+          handler = emitter._handlers[name][idx].handler || emitter._handlers[name][idx];
+          break;
+        }
+      }
+    }
+
+    if (idx === -1) {
+      return emitter;
+    }
+
+    if (idx === 0) {
+      emitter._handlers[name].shift();
+    } else {
+      emitter._handlers[name].splice(idx, 1);
+    }
+
+    emitter.emit('removeHandler', name, handler);
+    return emitter;
+  };
+
+  return Emittr;
+}();
+
+var RAFLoop =
+/** @class */
+function () {
+  function RAFLoop() {
+    var _this = this;
+    /**
+     * @description List of targets to update
+     */
+
+
+    this.targets = [];
+    /**
+     * @description ID of requested animation frame. Valuable only if loop is active and has items to iterate.
+     */
+
+    this.animationFrameID = 0;
+    /**
+     * @description Loop's state.
+     */
+
+    this._isActive = false;
+    /**
+     * @description Start the loop if it wasn't yet.
+     */
+
+    this.start = function () {
+      if (!_this._isActive && _this.targets.length) {
+        _this._isActive = true;
+        if (_this.animationFrameID) cancelAnimationFrame(_this.animationFrameID);
+        _this.animationFrameID = requestAnimationFrame(_this.rafCallback);
+      }
+
+      return _this;
+    };
+    /**
+     * @description Stop the loop if is was active.
+     */
+
+
+    this.stop = function () {
+      if (_this._isActive) {
+        _this._isActive = false;
+        if (_this.animationFrameID) cancelAnimationFrame(_this.animationFrameID);
+        _this.animationFrameID = 0;
+      }
+
+      return _this;
+    };
+    /**
+     * @description Add target to the iteration list if it's not there.
+     */
+
+
+    this.addTarget = function (target, silent) {
+      if (silent === void 0) {
+        silent = false;
+      }
+
+      if (!_this.targets.includes(target)) {
+        _this.targets.push(target);
+
+        if (_this.targets.length === 1 && !silent) _this.start();
+      }
+
+      return _this;
+    };
+    /**
+     * @description Remove target from iteration list if it was there.
+     */
+
+
+    this.removeTarget = function (target) {
+      var idx = _this.targets.indexOf(target);
+
+      if (idx !== -1) {
+        _this.targets.splice(idx, 1);
+
+        if (_this.targets.length === 0) _this.stop();
+      }
+
+      return _this;
+    };
+    /**
+     * @description Callback that called each animation frame.
+     */
+
+
+    this.rafCallback = function () {
+      if (!_this._isActive) {
+        return 0;
+      }
+
+      for (var i = 0; i < _this.targets.length; i++) {
+        if (!_this.targets[i]._unmounted) _this.targets[i].update();
+      }
+
+      _this.animationFrameID = requestAnimationFrame(_this.rafCallback);
+      return _this.animationFrameID;
+    };
+  }
+
+  Object.defineProperty(RAFLoop.prototype, "isActive", {
+    /**
+     * @description Loop's state.
+     */
+    get: function get() {
+      return this._isActive;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  return RAFLoop;
+}();
+
+var Loop = new RAFLoop();
+var AXIS_DIRECTION;
+
+(function (AXIS_DIRECTION) {
+  AXIS_DIRECTION["X"] = "x";
+  AXIS_DIRECTION["Y"] = "y";
+})(AXIS_DIRECTION || (AXIS_DIRECTION = {}));
+
+var TRACK_CLICK_BEHAVIOR;
+
+(function (TRACK_CLICK_BEHAVIOR) {
+  TRACK_CLICK_BEHAVIOR["JUMP"] = "jump";
+  TRACK_CLICK_BEHAVIOR["STEP"] = "step";
+})(TRACK_CLICK_BEHAVIOR || (TRACK_CLICK_BEHAVIOR = {}));
+
+var ScrollbarThumb =
+/** @class */
+function (_super) {
+  __extends(ScrollbarThumb, _super);
+
+  function ScrollbarThumb() {
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.element = null;
+    _this.initialOffsetX = 0;
+    _this.initialOffsetY = 0;
+    _this.elementRefHack = React.createRef();
+    _this.lastDragData = {
+      x: 0,
+      y: 0,
+      deltaX: 0,
+      deltaY: 0,
+      lastX: 0,
+      lastY: 0
+    };
+
+    _this.handleOnDragStart = function (ev, data) {
+      if (!_this.element) {
+        _this.handleOnDragStop(ev, data);
+
+        return;
+      }
+
+      if (isBrowser) {
+        _this.prevUserSelect = document.body.style.userSelect;
+        document.body.style.userSelect = 'none';
+        _this.prevOnSelectStart = document.onselectstart;
+        document.addEventListener('selectstart', ScrollbarThumb.selectStartReplacer);
+      }
+
+      if (_this.props.onDragStart) {
+        _this.props.onDragStart(_this.lastDragData = {
+          x: data.x - _this.initialOffsetX,
+          y: data.y - _this.initialOffsetY,
+          lastX: data.lastX - _this.initialOffsetX,
+          lastY: data.lastY - _this.initialOffsetY,
+          deltaX: data.deltaX,
+          deltaY: data.deltaY
+        });
+      }
+
+      _this.element.classList.add('dragging');
+    };
+
+    _this.handleOnDrag = function (ev, data) {
+      if (!_this.element) {
+        _this.handleOnDragStop(ev, data);
+
+        return;
+      }
+
+      if (_this.props.onDrag) {
+        _this.props.onDrag(_this.lastDragData = {
+          x: data.x - _this.initialOffsetX,
+          y: data.y - _this.initialOffsetY,
+          lastX: data.lastX - _this.initialOffsetX,
+          lastY: data.lastY - _this.initialOffsetY,
+          deltaX: data.deltaX,
+          deltaY: data.deltaY
+        });
+      }
+    };
+
+    _this.handleOnDragStop = function (ev, data) {
+      var resultData = data ? {
+        x: data.x - _this.initialOffsetX,
+        y: data.y - _this.initialOffsetY,
+        lastX: data.lastX - _this.initialOffsetX,
+        lastY: data.lastY - _this.initialOffsetY,
+        deltaX: data.deltaX,
+        deltaY: data.deltaY
+      } : _this.lastDragData;
+      if (_this.props.onDragEnd) _this.props.onDragEnd(resultData);
+      if (_this.element) _this.element.classList.remove('dragging');
+
+      if (isBrowser) {
+        document.body.style.userSelect = _this.prevUserSelect;
+
+        if (_this.prevOnSelectStart) {
+          document.addEventListener('selectstart', _this.prevOnSelectStart);
+        }
+
+        _this.prevOnSelectStart = null;
+      }
+
+      _this.initialOffsetX = 0;
+      _this.initialOffsetY = 0;
+      _this.lastDragData = {
+        x: 0,
+        y: 0,
+        deltaX: 0,
+        deltaY: 0,
+        lastX: 0,
+        lastY: 0
+      };
+    };
+
+    _this.handleOnMouseDown = function (ev) {
+      if (!_this.element) {
+        return;
+      }
+
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      if (!isUndef(ev.offsetX)) {
+        /* istanbul ignore next */
+        _this.initialOffsetX = ev.offsetX;
+        /* istanbul ignore next */
+
+        _this.initialOffsetY = ev.offsetY;
+      } else {
+        var rect = _this.element.getBoundingClientRect();
+
+        _this.initialOffsetX = (ev.clientX || ev.touches[0].clientX) - rect.left;
+        _this.initialOffsetY = (ev.clientY || ev.touches[0].clientY) - rect.top;
+      }
+    };
+
+    _this.elementRef = function (ref) {
+      if (isFun(_this.props.elementRef)) _this.props.elementRef(ref);
+      _this.element = ref; // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+
+      _this.elementRefHack.current = ref;
+    };
+
+    return _this;
+  }
+
+  ScrollbarThumb.prototype.componentDidMount = function () {
+    if (!this.element) {
+      this.setState(function () {
+        throw new Error("<ScrollbarThumb> Element was not created. Possibly you haven't provided HTMLDivElement to renderer's `elementRef` function.");
+      });
+    }
+  };
+
+  ScrollbarThumb.prototype.componentWillUnmount = function () {
+    this.handleOnDragStop();
+    this.elementRef(null);
+  };
+
+  ScrollbarThumb.prototype.render = function () {
+    var _a = this.props; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.elementRef;
+    var axis = _a.axis; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onDrag; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onDragEnd; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onDragStart;
+
+    var props = __rest(_a, ["elementRef", "axis", "onDrag", "onDragEnd", "onDragStart"]);
+
+    props.className = (0, _cnbuilder.cnb)('ScrollbarsCustom-Thumb', axis === AXIS_DIRECTION.X ? 'ScrollbarsCustom-ThumbX' : 'ScrollbarsCustom-ThumbY', props.className);
+
+    if (props.renderer) {
+      props.axis = axis;
+    }
+
+    return React.createElement(_reactDraggable.DraggableCore, {
+      allowAnyClick: false,
+      enableUserSelectHack: false,
+      onMouseDown: this.handleOnMouseDown,
+      onDrag: this.handleOnDrag,
+      onStart: this.handleOnDragStart,
+      onStop: this.handleOnDragStop,
+      nodeRef: this.elementRefHack
+    }, renderDivWithRenderer(props, this.elementRef));
+  };
+
+  ScrollbarThumb.selectStartReplacer = function () {
+    return false;
+  };
+
+  return ScrollbarThumb;
+}(React.Component);
+
+var ScrollbarTrack =
+/** @class */
+function (_super) {
+  __extends(ScrollbarTrack, _super);
+
+  function ScrollbarTrack() {
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+
+    _this.element = null;
+
+    _this.elementRef = function (ref) {
+      if (isFun(_this.props.elementRef)) _this.props.elementRef(ref);
+      _this.element = ref;
+    };
+
+    _this.handleClick = function (ev) {
+      if (!ev || !_this.element || ev.button !== 0) {
+        return;
+      }
+
+      if (isFun(_this.props.onClick) && ev.target === _this.element) {
+        if (!isUndef(ev.offsetX)) {
+          _this.props.onClick(ev, {
+            axis: _this.props.axis,
+            offset: _this.props.axis === AXIS_DIRECTION.X ? ev.offsetX : ev.offsetY
+          });
+        } else {
+          // support for old browsers
+
+          /* istanbul ignore next */
+          var rect = _this.element.getBoundingClientRect();
+          /* istanbul ignore next */
+
+
+          _this.props.onClick(ev, {
+            axis: _this.props.axis,
+            offset: _this.props.axis === AXIS_DIRECTION.X ? (ev.clientX || ev.touches[0].clientX) - rect.left : (ev.clientY || ev.touches[0].clientY) - rect.top
+          });
+        }
+      }
+
+      return true;
+    };
+
+    return _this;
+  }
+
+  ScrollbarTrack.prototype.componentDidMount = function () {
+    if (!this.element) {
+      this.setState(function () {
+        throw new Error("Element was not created. Possibly you haven't provided HTMLDivElement to renderer's `elementRef` function.");
+      });
+      return;
+    }
+
+    this.element.addEventListener('click', this.handleClick);
+  };
+
+  ScrollbarTrack.prototype.componentWillUnmount = function () {
+    if (this.element) {
+      this.element.removeEventListener('click', this.handleClick);
+      this.element = null;
+      this.elementRef(null);
+    }
+  };
+
+  ScrollbarTrack.prototype.render = function () {
+    var _a = this.props; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.elementRef;
+    var axis = _a.axis; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onClick;
+
+    var props = __rest(_a, ["elementRef", "axis", "onClick"]);
+
+    props.className = (0, _cnbuilder.cnb)('ScrollbarsCustom-Track', axis === AXIS_DIRECTION.X ? 'ScrollbarsCustom-TrackX' : 'ScrollbarsCustom-TrackY', props.className);
+
+    if (props.renderer) {
+      props.axis = axis;
+    }
+
+    return renderDivWithRenderer(props, this.elementRef);
+  };
+
+  return ScrollbarTrack;
+}(React.Component);
+
+var style = {
+  holder: {
+    position: 'relative',
+    width: '100%',
+    height: '100%'
+  },
+  wrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
+  content: {
+    boxSizing: 'border-box'
+  },
+  track: {
+    common: {
+      position: 'absolute',
+      overflow: 'hidden',
+      borderRadius: 4,
+      background: 'rgba(0,0,0,.1)',
+      userSelect: 'none'
+    },
+    x: {
+      height: 10,
+      width: 'calc(100% - 20px)',
+      bottom: 0,
+      left: 10
+    },
+    y: {
+      width: 10,
+      height: 'calc(100% - 20px)',
+      top: 10
+    }
+  },
+  thumb: {
+    common: {
+      cursor: 'pointer',
+      borderRadius: 4,
+      background: 'rgba(0,0,0,.4)'
+    },
+    x: {
+      height: '100%',
+      width: 0
+    },
+    y: {
+      width: '100%',
+      height: 0
+    }
+  }
+};
+var pageZoomLevel = isBrowser ? (0, _zoomLevel.zoomLevel)() : 1;
+
+if (isBrowser) {
+  window.addEventListener('resize', function () {
+    pageZoomLevel = (0, _zoomLevel.zoomLevel)();
+  }, {
+    passive: true
+  });
+}
+
+var ScrollbarContext = React.createContext({
+  parentScrollbar: null
+});
+exports.ScrollbarContext = ScrollbarContext;
+
+var Scrollbar =
+/** @class */
+function (_super) {
+  __extends(Scrollbar, _super);
+
+  function Scrollbar(props) {
+    var _this = _super.call(this, props) || this;
+    /**
+     * @description Get current scroll-related values.<br/>
+     * If <i>force</i> if truthy - will recalculate them instead of returning cached values.
+     *
+     * @return ScrollState
+     */
+
+
+    _this.getScrollState = function (force) {
+      if (force === void 0) {
+        force = false;
+      }
+
+      if (_this.scrollValues && !force) {
+        return __assign({}, _this.scrollValues);
+      }
+
+      var scrollState = {
+        clientHeight: 0,
+        clientWidth: 0,
+        contentScrollHeight: 0,
+        contentScrollWidth: 0,
+        scrollHeight: 0,
+        scrollWidth: 0,
+        scrollTop: 0,
+        scrollLeft: 0,
+        scrollYBlocked: false,
+        scrollXBlocked: false,
+        scrollYPossible: false,
+        scrollXPossible: false,
+        trackYVisible: false,
+        trackXVisible: false,
+        zoomLevel: pageZoomLevel * 1,
+        isRTL: undefined
+      };
+      var props = _this.props;
+      scrollState.isRTL = _this.state.isRTL;
+      scrollState.scrollYBlocked = props.noScroll || props.noScrollY;
+      scrollState.scrollXBlocked = props.noScroll || props.noScrollX;
+
+      if (_this.scrollerElement) {
+        scrollState.clientHeight = _this.scrollerElement.clientHeight;
+        scrollState.clientWidth = _this.scrollerElement.clientWidth;
+        scrollState.scrollHeight = _this.scrollerElement.scrollHeight;
+        scrollState.scrollWidth = _this.scrollerElement.scrollWidth;
+        scrollState.scrollTop = _this.scrollerElement.scrollTop;
+        scrollState.scrollLeft = _this.scrollerElement.scrollLeft;
+        scrollState.scrollYPossible = !scrollState.scrollYBlocked && scrollState.scrollHeight > scrollState.clientHeight;
+        scrollState.scrollXPossible = !scrollState.scrollXBlocked && scrollState.scrollWidth > scrollState.clientWidth;
+        scrollState.trackYVisible = scrollState.scrollYPossible || props.permanentTracks || props.permanentTrackY;
+        scrollState.trackXVisible = scrollState.scrollXPossible || props.permanentTracks || props.permanentTrackX;
+      }
+
+      if (_this.contentElement) {
+        scrollState.contentScrollHeight = _this.contentElement.scrollHeight;
+        scrollState.contentScrollWidth = _this.contentElement.scrollWidth;
+      }
+
+      return scrollState;
+    };
+    /**
+     * @description Scroll to top border
+     */
+
+
+    _this.scrollToTop = function () {
+      if (_this.scrollerElement) {
+        _this.scrollerElement.scrollTop = 0;
+      }
+
+      return _this;
+    };
+    /**
+     * @description Scroll to left border
+     */
+
+
+    _this.scrollToLeft = function () {
+      if (_this.scrollerElement) {
+        _this.scrollerElement.scrollLeft = 0;
+      }
+
+      return _this;
+    };
+    /**
+     * @description Scroll to bottom border
+     */
+
+
+    _this.scrollToBottom = function () {
+      if (_this.scrollerElement) {
+        _this.scrollerElement.scrollTop = _this.scrollerElement.scrollHeight - _this.scrollerElement.clientHeight;
+      }
+
+      return _this;
+    };
+    /**
+     * @description Scroll to right border
+     */
+
+
+    _this.scrollToRight = function () {
+      if (_this.scrollerElement) {
+        _this.scrollerElement.scrollLeft = _this.scrollerElement.scrollWidth - _this.scrollerElement.clientWidth;
+      }
+
+      return _this;
+    };
+    /**
+     * @description Set the scrolls at given coordinates.<br/>
+     * If coordinate is undefined - current scroll value will persist.
+     */
+
+
+    _this.scrollTo = function (x, y) {
+      if (_this.scrollerElement) {
+        if (isNum(x)) _this.scrollerElement.scrollLeft = x;
+        if (isNum(y)) _this.scrollerElement.scrollTop = y;
+      }
+
+      return _this;
+    };
+    /**
+     * @description Center the viewport at given coordinates.<br/>
+     * If coordinate is undefined - current scroll value will persist.
+     */
+
+
+    _this.centerAt = function (x, y) {
+      if (_this.scrollerElement) {
+        if (isNum(x)) _this.scrollerElement.scrollLeft = x - _this.scrollerElement.clientWidth / 2;
+        if (isNum(y)) _this.scrollerElement.scrollTop = y - _this.scrollerElement.clientHeight / 2;
+      }
+
+      return _this;
+    };
+
+    _this.update = function (force) {
+      if (force === void 0) {
+        force = false;
+      }
+
+      if (!_this.scrollerElement) {
+        return;
+      } // autodetect direction if not defined
+
+
+      if (isUndef(_this.state.isRTL)) {
+        _this.setState({
+          isRTL: getComputedStyle(_this.scrollerElement).direction === 'rtl'
+        });
+
+        return _this.getScrollState();
+      }
+
+      var scrollState = _this.getScrollState(true);
+
+      var prevScrollState = __assign({}, _this.scrollValues);
+
+      var props = _this.props;
+      var bitmask = 0;
+
+      if (!force) {
+        if (prevScrollState.clientHeight !== scrollState.clientHeight) bitmask |= Math.trunc(1);
+        if (prevScrollState.clientWidth !== scrollState.clientWidth) bitmask |= 1 << 1;
+        if (prevScrollState.scrollHeight !== scrollState.scrollHeight) bitmask |= 1 << 2;
+        if (prevScrollState.scrollWidth !== scrollState.scrollWidth) bitmask |= 1 << 3;
+        if (prevScrollState.scrollTop !== scrollState.scrollTop) bitmask |= 1 << 4;
+        if (prevScrollState.scrollLeft !== scrollState.scrollLeft) bitmask |= 1 << 5;
+        if (prevScrollState.scrollYBlocked !== scrollState.scrollYBlocked) bitmask |= 1 << 6;
+        if (prevScrollState.scrollXBlocked !== scrollState.scrollXBlocked) bitmask |= 1 << 7;
+        if (prevScrollState.scrollYPossible !== scrollState.scrollYPossible) bitmask |= 1 << 8;
+        if (prevScrollState.scrollXPossible !== scrollState.scrollXPossible) bitmask |= 1 << 9;
+        if (prevScrollState.trackYVisible !== scrollState.trackYVisible) bitmask |= 1 << 10;
+        if (prevScrollState.trackXVisible !== scrollState.trackXVisible) bitmask |= 1 << 11;
+        if (prevScrollState.isRTL !== scrollState.isRTL) bitmask |= 1 << 12;
+        if (prevScrollState.contentScrollHeight !== scrollState.contentScrollHeight) bitmask |= 1 << 13;
+        if (prevScrollState.contentScrollWidth !== scrollState.contentScrollWidth) bitmask |= 1 << 14;
+        if (prevScrollState.zoomLevel !== scrollState.zoomLevel) bitmask |= 1 << 15; // if not forced and nothing has changed - skip this update
+
+        if (bitmask === 0) {
+          return prevScrollState;
+        }
+      } else {
+        bitmask = 32767;
+      }
+
+      if (!props.native && _this.holderElement) {
+        if (bitmask & 1 << 13 && (props.translateContentSizesToHolder || props.translateContentSizeYToHolder)) {
+          _this.holderElement.style.height = "".concat(scrollState.contentScrollHeight, "px");
+        }
+
+        if (bitmask & 1 << 14 && (props.translateContentSizesToHolder || props.translateContentSizeXToHolder)) {
+          _this.holderElement.style.width = "".concat(scrollState.contentScrollWidth, "px");
+        }
+
+        if (props.translateContentSizesToHolder || props.translateContentSizeYToHolder || props.translateContentSizeXToHolder) {
+          if (!scrollState.clientHeight && scrollState.contentScrollHeight || !scrollState.clientWidth && scrollState.contentScrollWidth) {
+            return;
+          }
+        }
+      } // if scrollbars visibility has changed
+
+
+      if (bitmask & 1 << 10 || bitmask & 1 << 11) {
+        prevScrollState.scrollYBlocked = scrollState.scrollYBlocked;
+        prevScrollState.scrollXBlocked = scrollState.scrollXBlocked;
+        prevScrollState.scrollYPossible = scrollState.scrollYPossible;
+        prevScrollState.scrollXPossible = scrollState.scrollXPossible;
+
+        if (_this.trackYElement && bitmask & 1 << 10) {
+          _this.trackYElement.style.display = scrollState.trackYVisible ? '' : 'none';
+        }
+
+        if (_this.trackXElement && bitmask & 1 << 11) {
+          _this.trackXElement.style.display = scrollState.trackXVisible ? '' : 'none';
+        }
+
+        _this.scrollValues = prevScrollState;
+
+        _this.setState({
+          trackYVisible: _this.scrollValues.trackYVisible = scrollState.trackYVisible,
+          trackXVisible: _this.scrollValues.trackXVisible = scrollState.trackXVisible
+        });
+
+        return;
+      }
+
+      (props.native ? _this.updaterNative : _this.updaterCustom)(bitmask, scrollState);
+      _this.scrollValues = scrollState;
+
+      if (!props.native && bitmask & 1 << 15) {
+        getScrollbarWidth(true);
+
+        _this.forceUpdate();
+      }
+
+      _this.eventEmitter.emit('update', __assign({}, scrollState), prevScrollState);
+
+      if (bitmask & 1 << 4 || bitmask & 1 << 5) _this.eventEmitter.emit('scroll', __assign({}, scrollState), prevScrollState);
+      return _this.scrollValues;
+    }; // eslint-disable-next-line class-methods-use-this
+
+
+    _this.updaterNative = function () {
+      // just for future
+      return true;
+    };
+
+    _this.updaterCustom = function (bitmask, scrollValues) {
+      var props = _this.props;
+
+      if (_this.trackYElement) {
+        if (_this.thumbYElement && (bitmask & Math.trunc(1) || bitmask & 1 << 2 || bitmask & 1 << 4 || bitmask & 1 << 6 || bitmask & 1 << 8)) {
+          if (scrollValues.scrollYPossible) {
+            var trackInnerSize = getInnerHeight(_this.trackYElement);
+            var thumbSize = calcThumbSize(scrollValues.scrollHeight, scrollValues.clientHeight, trackInnerSize, props.minimalThumbYSize || props.minimalThumbSize, props.maximalThumbYSize || props.maximalThumbSize);
+            var thumbOffset = calcThumbOffset(scrollValues.scrollHeight, scrollValues.clientHeight, trackInnerSize, thumbSize, scrollValues.scrollTop);
+            _this.thumbYElement.style.transform = "translateY(".concat(thumbOffset, "px)");
+            _this.thumbYElement.style.height = "".concat(thumbSize, "px");
+            _this.thumbYElement.style.display = '';
+          } else {
+            _this.thumbYElement.style.transform = '';
+            _this.thumbYElement.style.height = '0px';
+            _this.thumbYElement.style.display = 'none';
+          }
+        }
+      }
+
+      if (_this.trackXElement) {
+        if (_this.thumbXElement && (bitmask & 1 << 1 || bitmask & 1 << 3 || bitmask & 1 << 5 || bitmask & 1 << 7 || bitmask & 1 << 9 || bitmask & 1 << 12)) {
+          if (scrollValues.scrollXPossible) {
+            var trackInnerSize = getInnerWidth(_this.trackXElement);
+            var thumbSize = calcThumbSize(scrollValues.scrollWidth, scrollValues.clientWidth, trackInnerSize, props.minimalThumbXSize || props.minimalThumbSize, props.maximalThumbXSize || props.maximalThumbSize);
+            var thumbOffset = calcThumbOffset(scrollValues.scrollWidth, scrollValues.clientWidth, trackInnerSize, thumbSize, scrollValues.scrollLeft);
+
+            if (_this.state.isRTL && shouldReverseRtlScroll()) {
+              thumbOffset += trackInnerSize - thumbSize;
+            }
+
+            _this.thumbXElement.style.transform = "translateX(".concat(thumbOffset, "px)");
+            _this.thumbXElement.style.width = "".concat(thumbSize, "px");
+            _this.thumbXElement.style.display = '';
+          } else {
+            _this.thumbXElement.style.transform = '';
+            _this.thumbXElement.style.width = '0px';
+            _this.thumbXElement.style.display = 'none';
+          }
+        }
+      }
+
+      return true;
+    };
+
+    _this.elementRefHolder = function (ref) {
+      _this.holderElement = ref;
+
+      if (isFun(_this.props.elementRef)) {
+        _this.props.elementRef(ref);
+      }
+    };
+
+    _this.elementRefWrapper = function (ref) {
+      _this.wrapperElement = ref;
+
+      if (isFun(_this.props.wrapperProps.elementRef)) {
+        _this.props.wrapperProps.elementRef(ref);
+      }
+    };
+
+    _this.elementRefScroller = function (ref) {
+      _this.scrollerElement = ref;
+
+      if (isFun(_this.props.scrollerProps.elementRef)) {
+        _this.props.scrollerProps.elementRef(ref);
+      }
+    };
+
+    _this.elementRefContent = function (ref) {
+      _this.contentElement = ref;
+
+      if (isFun(_this.props.contentProps.elementRef)) {
+        _this.props.contentProps.elementRef(ref);
+      }
+    };
+
+    _this.elementRefTrackX = function (ref) {
+      _this.trackXElement = ref;
+
+      if (isFun(_this.props.trackXProps.elementRef)) {
+        _this.props.trackXProps.elementRef(ref);
+      }
+    };
+
+    _this.elementRefTrackY = function (ref) {
+      _this.trackYElement = ref;
+
+      if (isFun(_this.props.trackYProps.elementRef)) {
+        _this.props.trackYProps.elementRef(ref);
+      }
+    };
+
+    _this.elementRefThumbX = function (ref) {
+      _this.thumbXElement = ref;
+
+      if (isFun(_this.props.thumbXProps.elementRef)) {
+        _this.props.thumbXProps.elementRef(ref);
+      }
+    };
+
+    _this.elementRefThumbY = function (ref) {
+      _this.thumbYElement = ref;
+
+      if (isFun(_this.props.thumbYProps.elementRef)) {
+        _this.props.thumbYProps.elementRef(ref);
+      }
+    };
+
+    _this.handleTrackXClick = function (ev, values) {
+      if (_this.props.trackXProps.onClick) {
+        _this.props.trackXProps.onClick(ev, values);
+      }
+
+      if (!_this.scrollerElement || !_this.trackXElement || !_this.thumbXElement || !_this.scrollValues || !_this.scrollValues.scrollXPossible) {
+        return;
+      }
+
+      _this._scrollDetection();
+
+      var thumbSize = _this.thumbXElement.clientWidth;
+      var trackInnerSize = getInnerWidth(_this.trackXElement);
+      var thumbOffset = (_this.scrollValues.isRTL && shouldReverseRtlScroll() ? values.offset + thumbSize / 2 - trackInnerSize : values.offset - thumbSize / 2) - (Number.parseFloat(getComputedStyle(_this.trackXElement).paddingLeft) || 0);
+      var target = calcScrollForThumbOffset(_this.scrollValues.scrollWidth, _this.scrollValues.clientWidth, trackInnerSize, thumbSize, thumbOffset);
+
+      if (_this.props.trackClickBehavior === TRACK_CLICK_BEHAVIOR.STEP) {
+        target = (_this.scrollValues.isRTL ? _this.scrollValues.scrollLeft > target : _this.scrollValues.scrollLeft < target) ? _this.scrollValues.scrollLeft + _this.scrollValues.clientWidth : _this.scrollValues.scrollLeft - _this.scrollValues.clientWidth;
+      }
+
+      _this.scrollerElement.scrollLeft = target;
+    };
+
+    _this.handleTrackYClick = function (ev, values) {
+      if (_this.props.trackYProps.onClick) _this.props.trackYProps.onClick(ev, values);
+
+      if (!_this.scrollerElement || !_this.trackYElement || !_this.thumbYElement || !_this.scrollValues || !_this.scrollValues.scrollYPossible) {
+        return;
+      }
+
+      _this._scrollDetection();
+
+      var thumbSize = _this.thumbYElement.clientHeight;
+      var target = calcScrollForThumbOffset(_this.scrollValues.scrollHeight, _this.scrollValues.clientHeight, getInnerHeight(_this.trackYElement), thumbSize, values.offset - thumbSize / 2) - (Number.parseFloat(getComputedStyle(_this.trackYElement).paddingTop) || 0);
+
+      if (_this.props.trackClickBehavior === TRACK_CLICK_BEHAVIOR.JUMP) {
+        _this.scrollerElement.scrollTop = target;
+      } else {
+        _this.scrollerElement.scrollTop = _this.scrollValues.scrollTop < target ? _this.scrollValues.scrollTop + _this.scrollValues.clientHeight : _this.scrollValues.scrollTop - _this.scrollValues.clientHeight;
+      }
+    };
+
+    _this.handleTrackYMouseWheel = function (ev) {
+      var props = _this.props;
+
+      if (props.trackYProps && props.trackYProps.onWheel) {
+        props.trackYProps.onWheel(ev);
+      }
+
+      if (props.disableTracksMousewheelScrolling || props.disableTrackYMousewheelScrolling) {
+        return;
+      }
+
+      _this._scrollDetection();
+
+      if (!_this.scrollerElement || _this.scrollValues.scrollYBlocked) {
+        return;
+      }
+
+      _this.scrollTop += ev.deltaY;
+    };
+
+    _this.handleTrackXMouseWheel = function (ev) {
+      var props = _this.props;
+
+      if (props.trackXProps && props.trackXProps.onWheel) {
+        props.trackXProps.onWheel(ev);
+      }
+
+      if (props.disableTracksMousewheelScrolling || props.disableTrackXMousewheelScrolling) {
+        return;
+      }
+
+      _this._scrollDetection();
+
+      if (!_this.scrollerElement || _this.scrollValues.scrollXBlocked) {
+        return;
+      }
+
+      _this.scrollLeft += ev.deltaX;
+    };
+
+    _this.handleThumbXDrag = function (data) {
+      var _a;
+
+      if (!_this.trackXElement || !_this.thumbXElement || !_this.scrollerElement || !_this.scrollValues || !_this.scrollValues.scrollXPossible) {
+        return;
+      }
+
+      _this._scrollDetection();
+
+      var trackRect = _this.trackXElement.getBoundingClientRect();
+
+      var styles = getComputedStyle(_this.trackXElement);
+      var paddingLeft = Number.parseFloat(styles.paddingLeft) || 0;
+      var paddingRight = Number.parseFloat(styles.paddingRight) || 0;
+      var trackInnerSize = trackRect.width - paddingLeft - paddingRight;
+      var thumbSize = _this.thumbXElement.clientWidth;
+      var offset = _this.scrollValues.isRTL && shouldReverseRtlScroll() ? data.x + thumbSize - trackInnerSize + paddingLeft : data.lastX - paddingLeft;
+      _this.scrollerElement.scrollLeft = calcScrollForThumbOffset(_this.scrollValues.scrollWidth, _this.scrollValues.clientWidth, trackInnerSize, thumbSize, offset);
+
+      if ((_a = _this.props.thumbXProps) === null || _a === void 0 ? void 0 : _a.onDrag) {
+        _this.props.thumbXProps.onDrag(data);
+      }
+    };
+
+    _this.handleThumbXDragEnd = function (data) {
+      var _a;
+
+      _this.handleThumbXDrag(data);
+
+      if ((_a = _this.props.thumbXProps) === null || _a === void 0 ? void 0 : _a.onDragEnd) {
+        _this.props.thumbXProps.onDragEnd(data);
+      }
+    };
+
+    _this.handleThumbYDrag = function (data) {
+      var _a;
+
+      if (!_this.scrollerElement || !_this.trackYElement || !_this.thumbYElement || !_this.scrollValues || !_this.scrollValues.scrollYPossible) {
+        return;
+      }
+
+      _this._scrollDetection();
+
+      var trackRect = _this.trackYElement.getBoundingClientRect();
+
+      var styles = getComputedStyle(_this.trackYElement);
+      var paddingTop = Number.parseFloat(styles.paddingTop) || 0;
+      var paddingBottom = Number.parseFloat(styles.paddingBottom) || 0;
+      var trackInnerSize = trackRect.height - paddingTop - paddingBottom;
+      var thumbSize = _this.thumbYElement.clientHeight;
+      var offset = data.y - paddingTop;
+      _this.scrollerElement.scrollTop = calcScrollForThumbOffset(_this.scrollValues.scrollHeight, _this.scrollValues.clientHeight, trackInnerSize, thumbSize, offset);
+
+      if ((_a = _this.props.thumbYProps) === null || _a === void 0 ? void 0 : _a.onDrag) {
+        _this.props.thumbYProps.onDrag(data);
+      }
+    };
+
+    _this.handleThumbYDragEnd = function (data) {
+      var _a;
+
+      _this.handleThumbYDrag(data);
+
+      if ((_a = _this.props.thumbYProps) === null || _a === void 0 ? void 0 : _a.onDragEnd) {
+        _this.props.thumbYProps.onDragEnd(data);
+      }
+    };
+
+    _this.handleScrollerScroll = function () {
+      _this._scrollDetection();
+    };
+
+    _this._scrollDetection = function () {
+      if (!_this._scrollDetectionTO) {
+        _this.eventEmitter.emit('scrollStart', _this.getScrollState());
+      } else if (isBrowser) {
+        window.clearTimeout(_this._scrollDetectionTO);
+      }
+
+      _this._scrollDetectionTO = isBrowser ? window.setTimeout(_this._scrollDetectionCallback, _this.props.scrollDetectionThreshold || 0) : null;
+    };
+
+    _this._scrollDetectionCallback = function () {
+      _this._scrollDetectionTO = null;
+
+      _this.eventEmitter.emit('scrollStop', _this.getScrollState());
+    };
+
+    _this.state = {
+      trackXVisible: false,
+      trackYVisible: false,
+      isRTL: props.rtl
+    };
+    _this.scrollValues = _this.getScrollState(true);
+    _this.eventEmitter = new Emittr(15);
+    if (props.onUpdate) _this.eventEmitter.on('update', props.onUpdate);
+    if (props.onScroll) _this.eventEmitter.on('scroll', props.onScroll);
+    if (props.onScrollStart) _this.eventEmitter.on('scrollStart', props.onScrollStart);
+    if (props.onScrollStop) _this.eventEmitter.on('scrollStop', props.onScrollStop);
+    _this.id = uuid();
+    return _this;
+  }
+
+  Object.defineProperty(Scrollbar.prototype, "scrollTop", {
+    // eslint-disable-next-line react/sort-comp
+    get: function get() {
+      if (this.scrollerElement) {
+        return this.scrollerElement.scrollTop;
+      }
+
+      return 0;
+    },
+    set: function set(top) {
+      if (this.scrollerElement) {
+        this.scrollerElement.scrollTop = top;
+        this.update();
+      }
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(Scrollbar.prototype, "scrollLeft", {
+    get: function get() {
+      if (this.scrollerElement) {
+        return this.scrollerElement.scrollLeft;
+      }
+
+      return 0;
+    },
+    set: function set(left) {
+      if (this.scrollerElement) {
+        this.scrollerElement.scrollLeft = left;
+      }
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(Scrollbar.prototype, "scrollHeight", {
+    get: function get() {
+      if (this.scrollerElement) {
+        return this.scrollerElement.scrollHeight;
+      }
+
+      return 0;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(Scrollbar.prototype, "scrollWidth", {
+    get: function get() {
+      if (this.scrollerElement) {
+        return this.scrollerElement.scrollWidth;
+      }
+
+      return 0;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(Scrollbar.prototype, "clientHeight", {
+    get: function get() {
+      if (this.scrollerElement) {
+        return this.scrollerElement.clientHeight;
+      }
+
+      return 0;
+    },
+    enumerable: false,
+    configurable: true
+  });
+  Object.defineProperty(Scrollbar.prototype, "clientWidth", {
+    get: function get() {
+      if (this.scrollerElement) {
+        return this.scrollerElement.clientWidth;
+      }
+
+      return 0;
+    },
+    enumerable: false,
+    configurable: true
+  }); // eslint-disable-next-line react/sort-comp
+
+  Scrollbar.calculateStyles = function (props, state, scrollValues, scrollbarWidth) {
+    var _a, _b, _c, _d;
+
+    var useDefaultStyles = !props.noDefaultStyles;
+    return {
+      holder: __assign(__assign(__assign({}, useDefaultStyles && style.holder), {
+        position: 'relative'
+      }), props.style),
+      wrapper: __assign(__assign(__assign({}, useDefaultStyles && __assign(__assign(__assign({}, style.wrapper), !props.disableTracksWidthCompensation && !props.disableTrackYWidthCompensation && (_a = {}, _a[state.isRTL ? 'left' : 'right'] = state.trackYVisible ? 10 : 0, _a)), !props.disableTracksWidthCompensation && !props.disableTrackXWidthCompensation && {
+        bottom: state.trackXVisible ? 10 : 0
+      })), props.wrapperProps.style), {
+        position: 'absolute',
+        overflow: 'hidden'
+      }),
+      content: __assign(__assign(__assign(__assign(__assign({}, useDefaultStyles && style.content), props.translateContentSizesToHolder || props.translateContentSizeYToHolder || props.translateContentSizeXToHolder ? {
+        display: 'table-cell'
+      } : {
+        padding: 0.05 // needed to disable margin collapsing without flexboxes, other possible solutions here: https://stackoverflow.com/questions/19718634/how-to-disable-margin-collapsing
+
+      }), useDefaultStyles && !(props.translateContentSizesToHolder || props.translateContentSizeYToHolder) && {
+        minHeight: '100%'
+      }), useDefaultStyles && !(props.translateContentSizesToHolder || props.translateContentSizeXToHolder) && {
+        minWidth: '100%'
+      }), props.contentProps.style),
+      scroller: __assign(__assign(__assign(__assign((_b = {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        paddingBottom: !scrollbarWidth && scrollValues.scrollXPossible ? props.fallbackScrollbarWidth : undefined
+      }, _b[state.isRTL ? 'paddingLeft' : 'paddingRight'] = !scrollbarWidth && scrollValues.scrollYPossible ? props.fallbackScrollbarWidth : undefined, _b), props.scrollerProps.style), !isUndef(props.rtl) && {
+        direction: props.rtl ? 'rtl' : 'ltr'
+      }), props.momentum && {
+        WebkitOverflowScrolling: 'touch'
+      }), (_c = {
+        overflowY: scrollValues.scrollYPossible ? 'scroll' : 'hidden',
+        overflowX: scrollValues.scrollXPossible ? 'scroll' : 'hidden',
+        marginBottom: scrollValues.scrollXPossible ? -(scrollbarWidth || props.fallbackScrollbarWidth) - Number(scrollValues.zoomLevel !== 1) : undefined
+      }, _c[state.isRTL ? 'marginLeft' : 'marginRight'] = scrollValues.scrollYPossible ? -(scrollbarWidth || props.fallbackScrollbarWidth) - Number(scrollValues.zoomLevel !== 1) : undefined, _c)),
+      trackX: __assign(__assign(__assign(__assign({}, useDefaultStyles && style.track.common), useDefaultStyles && style.track.x), props.trackXProps.style), !state.trackXVisible && {
+        display: 'none'
+      }),
+      trackY: __assign(__assign(__assign(__assign(__assign({}, useDefaultStyles && style.track.common), useDefaultStyles && style.track.y), useDefaultStyles && (_d = {}, _d[state.isRTL ? 'left' : 'right'] = 0, _d)), props.trackYProps.style), !state.trackYVisible && {
+        display: 'none'
+      }),
+      thumbX: __assign(__assign(__assign({}, useDefaultStyles && style.thumb.common), useDefaultStyles && style.thumb.x), props.thumbXProps.style),
+      thumbY: __assign(__assign(__assign({}, useDefaultStyles && style.thumb.common), useDefaultStyles && style.thumb.y), props.thumbYProps.style)
+    };
+  };
+
+  Scrollbar.prototype.componentDidMount = function () {
+    if (!this.scrollerElement) {
+      this.setState(function () {
+        throw new Error("scroller element was not created. Possibly you haven't provided HTMLDivElement to renderer's `elementRef` function.");
+      });
+      return;
+    }
+
+    if (!this.contentElement) {
+      this.setState(function () {
+        throw new Error("content element was not created. Possibly you haven't provided HTMLDivElement to renderer's `elementRef` function.");
+      });
+      return;
+    }
+
+    var props = this.props;
+
+    if (!props.native && !props.mobileNative) {
+      // ToDo: move native state to the state so it can be synchronized
+      if (!this.holderElement) {
+        this.setState(function () {
+          throw new Error("holder element was not created. Possibly you haven't provided HTMLDivElement to renderer's `elementRef` function.");
+        });
+        return;
+      }
+
+      if (!this.wrapperElement) {
+        this.setState(function () {
+          throw new Error("wrapper element was not created. Possibly you haven't provided HTMLDivElement to renderer's `elementRef` function.");
+        });
+        return;
+      }
+    }
+
+    Loop.addTarget(this);
+
+    if (!isUndef(props.scrollTop)) {
+      this.scrollerElement.scrollTop = props.scrollTop;
+    }
+
+    if (!isUndef(props.scrollLeft)) {
+      this.scrollerElement.scrollLeft = props.scrollLeft;
+    }
+
+    this.update(true);
+  };
+
+  Scrollbar.prototype.componentWillUnmount = function () {
+    Loop.removeTarget(this);
+  };
+
+  Scrollbar.prototype.componentDidUpdate = function (prevProps, prevState) {
+    if (!this.scrollerElement) {
+      return;
+    }
+
+    var props = this.props;
+
+    if (props.rtl !== prevProps.rtl && props.rtl !== this.state.isRTL) {
+      this.setState({
+        isRTL: props.rtl
+      });
+    }
+
+    if (this.state.isRTL !== prevState.isRTL) {
+      this.update();
+    }
+
+    if (!isUndef(props.scrollTop) && props.scrollTop !== this.scrollerElement.scrollTop) {
+      this.scrollerElement.scrollTop = props.scrollTop;
+    }
+
+    if (!isUndef(props.scrollLeft) && props.scrollLeft !== this.scrollerElement.scrollLeft) {
+      this.scrollerElement.scrollLeft = props.scrollLeft;
+    }
+
+    if (prevProps.onUpdate !== props.onUpdate) {
+      if (prevProps.onUpdate) this.eventEmitter.off('update', prevProps.onUpdate);
+      if (props.onUpdate) this.eventEmitter.on('update', props.onUpdate);
+    }
+
+    if (prevProps.onScroll !== props.onScroll) {
+      if (prevProps.onScroll) this.eventEmitter.off('scroll', prevProps.onScroll);
+      if (props.onScroll) this.eventEmitter.on('scroll', props.onScroll);
+    }
+
+    if (prevProps.onScrollStart !== props.onScrollStart) {
+      if (prevProps.onScrollStart) this.eventEmitter.off('scrollStart', prevProps.onScrollStart);
+      if (props.onScrollStart) this.eventEmitter.on('scrollStart', props.onScrollStart);
+    }
+
+    if (prevProps.onScrollStop !== props.onScrollStop) {
+      if (prevProps.onScrollStop) this.eventEmitter.off('scrollStop', prevProps.onScrollStop);
+      if (props.onScrollStop) this.eventEmitter.on('scrollStop', props.onScrollStop);
+    }
+  }; // eslint-disable-next-line react/sort-comp
+
+
+  Scrollbar.prototype.render = function () {
+    var _a = this.props,
+        createContext = _a.createContext,
+        rtl = _a.rtl,
+        native = _a.native,
+        mobileNative = _a.mobileNative,
+        momentum = _a.momentum; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.noDefaultStyles;
+    var disableTracksMousewheelScrolling = _a.disableTracksMousewheelScrolling,
+        disableTrackXMousewheelScrolling = _a.disableTrackXMousewheelScrolling,
+        disableTrackYMousewheelScrolling = _a.disableTrackYMousewheelScrolling; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.disableTracksWidthCompensation; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.disableTrackXWidthCompensation; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.disableTrackYWidthCompensation;
+    var noScrollX = _a.noScrollX,
+        noScrollY = _a.noScrollY,
+        noScroll = _a.noScroll,
+        permanentTrackX = _a.permanentTrackX,
+        permanentTrackY = _a.permanentTrackY,
+        permanentTracks = _a.permanentTracks,
+        removeTracksWhenNotUsed = _a.removeTracksWhenNotUsed,
+        removeTrackYWhenNotUsed = _a.removeTrackYWhenNotUsed,
+        removeTrackXWhenNotUsed = _a.removeTrackXWhenNotUsed; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.minimalThumbSize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.maximalThumbSize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.minimalThumbXSize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.maximalThumbXSize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.minimalThumbYSize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.maximalThumbYSize; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.fallbackScrollbarWidth; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.scrollTop; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.scrollLeft; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.trackClickBehavior; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.scrollDetectionThreshold;
+    var propsWrapperProps = _a.wrapperProps,
+        propsScrollerProps = _a.scrollerProps,
+        propsContentProps = _a.contentProps,
+        propsTrackXProps = _a.trackXProps,
+        propsTrackYProps = _a.trackYProps,
+        propsThumbXProps = _a.thumbXProps,
+        propsThumbYProps = _a.thumbYProps,
+        propsScrollbarWidth = _a.scrollbarWidth; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.elementRef; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onUpdate; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onScroll; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onScrollStart; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.onScrollStop; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.translateContentSizesToHolder; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.translateContentSizeYToHolder; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    _a.translateContentSizeXToHolder;
+
+    var children = _a.children,
+        propsHolderProps = __rest(_a, ["createContext", "rtl", "native", "mobileNative", "momentum", "noDefaultStyles", "disableTracksMousewheelScrolling", "disableTrackXMousewheelScrolling", "disableTrackYMousewheelScrolling", "disableTracksWidthCompensation", "disableTrackXWidthCompensation", "disableTrackYWidthCompensation", "noScrollX", "noScrollY", "noScroll", "permanentTrackX", "permanentTrackY", "permanentTracks", "removeTracksWhenNotUsed", "removeTrackYWhenNotUsed", "removeTrackXWhenNotUsed", "minimalThumbSize", "maximalThumbSize", "minimalThumbXSize", "maximalThumbXSize", "minimalThumbYSize", "maximalThumbYSize", "fallbackScrollbarWidth", "scrollTop", "scrollLeft", "trackClickBehavior", "scrollDetectionThreshold", "wrapperProps", "scrollerProps", "contentProps", "trackXProps", "trackYProps", "thumbXProps", "thumbYProps", "scrollbarWidth", "elementRef", "onUpdate", "onScroll", "onScrollStart", "onScrollStop", "translateContentSizesToHolder", "translateContentSizeYToHolder", "translateContentSizeXToHolder", "children"]);
+
+    var scrollbarWidth = !isUndef(propsScrollbarWidth) ? propsScrollbarWidth : getScrollbarWidth() || 0;
+
+    if (native || !scrollbarWidth && mobileNative) {
+      this.elementRefHolder(null);
+      this.elementRefWrapper(null);
+      this.elementRefTrackX(null);
+      this.elementRefTrackY(null);
+      this.elementRefThumbX(null);
+      this.elementRefThumbY(null);
+
+      var contentProps_1 = __assign(__assign({}, propsContentProps), {
+        key: 'ScrollbarsCustom-Content',
+        className: (0, _cnbuilder.cnb)('ScrollbarsCustom-Content', propsContentProps.className),
+        children: children
+      });
+
+      var scrollerProps_1 = __assign(__assign({}, propsHolderProps), {
+        className: (0, _cnbuilder.cnb)('ScrollbarsCustom native', this.state.trackYVisible && 'trackYVisible', this.state.trackXVisible && 'trackXVisible', this.state.isRTL && 'rtl', propsHolderProps.className),
+        style: __assign(__assign(__assign(__assign({}, propsHolderProps.style), !isUndef(rtl) && {
+          direction: rtl ? 'rtl' : 'ltr'
+        }), momentum && {
+          WebkitOverflowScrolling: 'touch'
+        }), {
+          overflowX: noScroll || noScrollX ? 'hidden' : permanentTracks || permanentTrackX ? 'scroll' : 'auto',
+          overflowY: noScroll || noScrollY ? 'hidden' : permanentTracks || permanentTrackY ? 'scroll' : 'auto'
+        }),
+        onScroll: this.handleScrollerScroll,
+        children: renderDivWithRenderer(contentProps_1, this.elementRefContent),
+        renderer: propsScrollerProps.renderer,
+        elementRef: propsScrollerProps.elementRef
+      });
+
+      return renderDivWithRenderer(scrollerProps_1, this.elementRefScroller);
+    }
+
+    var styles = Scrollbar.calculateStyles(this.props, this.state, this.scrollValues, scrollbarWidth);
+    var holderChildren = [];
+
+    var contentProps = __assign(__assign({}, propsContentProps), {
+      key: 'ScrollbarsCustom-Content',
+      className: (0, _cnbuilder.cnb)('ScrollbarsCustom-Content', propsContentProps.className),
+      style: styles.content,
+      children: createContext ? // eslint-disable-next-line react/jsx-no-constructed-context-values
+      React.createElement(ScrollbarContext.Provider, {
+        value: {
+          parentScrollbar: this
+        }
+      }, children) : children
+    });
+
+    var scrollerProps = __assign(__assign({}, propsScrollerProps), {
+      key: 'ScrollbarsCustom-Scroller',
+      className: (0, _cnbuilder.cnb)('ScrollbarsCustom-Scroller', propsScrollerProps.className),
+      style: styles.scroller,
+      children: renderDivWithRenderer(contentProps, this.elementRefContent),
+      onScroll: this.handleScrollerScroll
+    });
+
+    var wrapperProps = __assign(__assign({}, propsWrapperProps), {
+      key: 'ScrollbarsCustom-Wrapper',
+      className: (0, _cnbuilder.cnb)('ScrollbarsCustom-Wrapper', propsWrapperProps.className),
+      style: styles.wrapper,
+      children: renderDivWithRenderer(scrollerProps, this.elementRefScroller)
+    });
+
+    holderChildren.push(renderDivWithRenderer(wrapperProps, this.elementRefWrapper));
+
+    if (this.state.trackYVisible || !removeTracksWhenNotUsed && !removeTrackYWhenNotUsed) {
+      var thumbYProps = __assign(__assign({}, propsThumbYProps), {
+        key: 'ScrollbarsCustom-ThumbY',
+        style: styles.thumbY,
+        elementRef: this.elementRefThumbY,
+        onDrag: this.handleThumbYDrag,
+        onDragEnd: this.handleThumbYDragEnd,
+        axis: AXIS_DIRECTION.Y
+      });
+
+      var trackYProps = __assign(__assign(__assign(__assign({}, propsTrackYProps), {
+        key: 'ScrollbarsCustom-TrackY',
+        style: styles.trackY,
+        elementRef: this.elementRefTrackY,
+        onClick: this.handleTrackYClick
+      }), (disableTracksMousewheelScrolling || disableTrackYMousewheelScrolling) && {
+        onWheel: this.handleTrackYMouseWheel
+      }), {
+        axis: AXIS_DIRECTION.Y
+      });
+
+      trackYProps.children = React.createElement(ScrollbarThumb, __assign({}, thumbYProps));
+      holderChildren.push(React.createElement(ScrollbarTrack, __assign({}, trackYProps)));
+    } else {
+      this.elementRefTrackY(null);
+      this.elementRefThumbY(null);
+    }
+
+    if (this.state.trackXVisible || !removeTracksWhenNotUsed && !removeTrackXWhenNotUsed) {
+      var thumbXProps = __assign(__assign({}, propsThumbXProps), {
+        key: 'ScrollbarsCustom-ThumbX',
+        style: styles.thumbX,
+        elementRef: this.elementRefThumbX,
+        onDrag: this.handleThumbXDrag,
+        onDragEnd: this.handleThumbXDragEnd,
+        axis: AXIS_DIRECTION.X
+      });
+
+      var trackXProps = __assign(__assign(__assign(__assign({}, propsTrackXProps), {
+        key: 'ScrollbarsCustom-TrackX',
+        style: styles.trackX,
+        elementRef: this.elementRefTrackX,
+        onClick: this.handleTrackXClick
+      }), (disableTracksMousewheelScrolling || disableTrackXMousewheelScrolling) && {
+        onWheel: this.handleTrackXMouseWheel
+      }), {
+        axis: AXIS_DIRECTION.X
+      });
+
+      trackXProps.children = React.createElement(ScrollbarThumb, __assign({}, thumbXProps));
+      holderChildren.push(React.createElement(ScrollbarTrack, __assign({}, trackXProps)));
+    } else {
+      this.elementRefTrackX(null);
+      this.elementRefThumbX(null);
+    }
+
+    var holderProps = __assign(__assign({}, propsHolderProps), {
+      className: (0, _cnbuilder.cnb)('ScrollbarsCustom', this.state.trackYVisible && 'trackYVisible', this.state.trackXVisible && 'trackXVisible', this.state.isRTL && 'rtl', propsHolderProps.className),
+      style: styles.holder,
+      children: holderChildren
+    });
+
+    return renderDivWithRenderer(holderProps, this.elementRefHolder);
+  }; // eslint-disable-next-line react/static-property-placement
+
+
+  Scrollbar.contextType = ScrollbarContext; // eslint-disable-next-line react/static-property-placement
+
+  Scrollbar.defaultProps = {
+    momentum: true,
+    minimalThumbSize: 30,
+    fallbackScrollbarWidth: 20,
+    trackClickBehavior: TRACK_CLICK_BEHAVIOR.JUMP,
+    scrollDetectionThreshold: 100,
+    wrapperProps: {},
+    scrollerProps: {},
+    contentProps: {},
+    trackXProps: {},
+    trackYProps: {},
+    thumbXProps: {},
+    thumbYProps: {}
+  };
+  return Scrollbar;
+}(React.Component);
+
+exports.default = exports.Scrollbar = Scrollbar;
+},{"cnbuilder":"../../node_modules/cnbuilder/esm/index.js","react":"../../node_modules/react/index.js","zoom-level":"../../node_modules/zoom-level/dist/zoom-level.esm.js","react-draggable":"../../node_modules/react-scrollbars-custom/node_modules/react-draggable/build/cjs/cjs.js"}],"../core/components/HeaderApp/HeaderApp.tsx":[function(require,module,exports) {
 "use strict";
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
@@ -56276,11 +60290,27 @@ var core_urls_1 = __importDefault(require("../../lib/core-urls"));
 
 var routes_1 = __importDefault(require("../../../app/lib/routes"));
 
+var react_1 = require("react");
+
+var react_scrollbars_custom_1 = __importDefault(require("react-scrollbars-custom"));
+
 var HeaderApp = (0, mobx_react_lite_1.observer)(function () {
-  return React.createElement("div", {
+  var _a = (0, react_1.useState)(false),
+      isMenuOpen = _a[0],
+      setIsMenuOpen = _a[1];
+
+  var toggleMenu = function toggleMenu() {
+    return setIsMenuOpen(function (isOpen) {
+      return !isOpen;
+    });
+  };
+
+  return React.createElement(react_scrollbars_custom_1.default, null, React.createElement("div", {
     className: 'header-app'
   }, React.createElement(react_bootstrap_1.Navbar, {
-    expand: 'sm'
+    sticky: "top",
+    expand: "sm",
+    collapseOnSelect: true
   }, React.createElement(react_bootstrap_1.Navbar.Brand, {
     className: 'title',
     href: core_urls_1.default.DOMAIN
@@ -56290,6 +60320,7 @@ var HeaderApp = (0, mobx_react_lite_1.observer)(function () {
     className: 'justify-content-end',
     id: 'basic-navbar-nav'
   }, React.createElement(react_bootstrap_1.Nav, null, React.createElement(react_bootstrap_1.Nav.Link, {
+    onClick: toggleMenu,
     className: 'icon',
     href: '#' + routes_1.default.HOME
   }, React.createElement("i", {
@@ -56309,10 +60340,10 @@ var HeaderApp = (0, mobx_react_lite_1.observer)(function () {
     title: 'Мои данные',
     className: "fa fa-address-card",
     "aria-hidden": "true"
-  }), " \u041C\u043E\u0438 \u0434\u0430\u043D\u043D\u044B\u0435")))));
+  }), " \u041C\u043E\u0438 \u0434\u0430\u043D\u043D\u044B\u0435"))))));
 });
 exports.default = HeaderApp;
-},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./HeaderApp.scss":"../core/components/HeaderApp/HeaderApp.scss","../../lib/core-urls":"../core/lib/core-urls.ts","../../../app/lib/routes":"lib/routes.ts"}],"../../node_modules/resolve-pathname/esm/resolve-pathname.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./HeaderApp.scss":"../core/components/HeaderApp/HeaderApp.scss","../../lib/core-urls":"../core/lib/core-urls.ts","../../../app/lib/routes":"lib/routes.ts","react-scrollbars-custom":"../../node_modules/react-scrollbars-custom/dist/rsc.esm.js"}],"../../node_modules/resolve-pathname/esm/resolve-pathname.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -60326,7 +64357,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.doc = exports.dataInsideCard = exports.data = void 0;
 exports.data = [{
   title: 'https://zet-zaim.ru/zz/joymoney.png',
-  sum: 'Сумма От 100 руб',
+  sum: 'Сумма От 3k руб',
   bet: 'Ставка: 0%',
   loan: 'Первый займ 0%',
   link: 'https://pxl.leads.su/click/027c74ca717e18a066f5cdfb5962d31a?erid=21jyGae'
@@ -62063,7 +66094,32 @@ var _Transition = _interopRequireDefault(require("./Transition"));
 var _config = _interopRequireDefault(require("./config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./CSSTransition":"../../node_modules/react-transition-group/esm/CSSTransition.js","./ReplaceTransition":"../../node_modules/react-transition-group/esm/ReplaceTransition.js","./SwitchTransition":"../../node_modules/react-transition-group/esm/SwitchTransition.js","./TransitionGroup":"../../node_modules/react-transition-group/esm/TransitionGroup.js","./Transition":"../../node_modules/react-transition-group/esm/Transition.js","./config":"../../node_modules/react-transition-group/esm/config.js"}],"components/Home/Home.tsx":[function(require,module,exports) {
+},{"./CSSTransition":"../../node_modules/react-transition-group/esm/CSSTransition.js","./ReplaceTransition":"../../node_modules/react-transition-group/esm/ReplaceTransition.js","./SwitchTransition":"../../node_modules/react-transition-group/esm/SwitchTransition.js","./TransitionGroup":"../../node_modules/react-transition-group/esm/TransitionGroup.js","./Transition":"../../node_modules/react-transition-group/esm/Transition.js","./config":"../../node_modules/react-transition-group/esm/config.js"}],"lib/store/pages/ElectivesStore-store.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var mobx_1 = require("mobx");
+
+var ElectivesStore = function () {
+  function ElectivesStore() {
+    this.link = '';
+    (0, mobx_1.makeAutoObservable)(this, {}, {
+      deep: true
+    });
+  }
+
+  ElectivesStore.prototype.setLink = function (val) {
+    this.link = val;
+  };
+
+  return ElectivesStore;
+}();
+
+exports.default = new ElectivesStore();
+},{"mobx":"../../node_modules/mobx/dist/mobx.esm.js"}],"components/Home/Home.tsx":[function(require,module,exports) {
 "use strict";
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
@@ -62126,12 +66182,19 @@ var nanoid_1 = require("nanoid");
 
 var react_transition_group_1 = require("react-transition-group");
 
+var ElectivesStore_store_1 = __importDefault(require("../../lib/store/pages/ElectivesStore-store"));
+
 exports.default = (0, mobx_react_lite_1.observer)(function () {
   var _a = (0, react_1.useState)(false),
       showMessage = _a[0],
       setShowMessage = _a[1];
 
   var nodeRef = (0, react_1.useRef)(null);
+
+  var redirect = function redirect(val) {
+    ElectivesStore_store_1.default.setLink(val);
+  };
+
   (0, react_1.useEffect)(function () {
     setShowMessage(true);
   }, []);
@@ -62196,16 +66259,20 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
       xs: 6,
       md: 6
     }, react_1.default.createElement(react_bootstrap_1.Button, {
+      target: '_blank',
       href: data.link,
       style: {
         background: '#5925DC',
         float: 'right'
       },
-      className: 'home-btn'
+      className: 'home-btn',
+      onClick: function onClick() {
+        redirect(data.link);
+      }
     }, "\u041E\u0442\u043A\u0440\u044B\u0442\u044C"))))));
   })));
 });
-},{"react":"../../node_modules/react/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./Home.scss":"components/Home/Home.scss","../../generic/Data/DataCard":"generic/Data/DataCard.tsx","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../pages/Modal/Info/Info":"components/pages/Modal/Info/Info.tsx","nanoid":"../../node_modules/nanoid/index.browser.js","react-transition-group":"../../node_modules/react-transition-group/esm/index.js"}],"components/pages/LoanPortfolio/LoanPortfolio.scss":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./Home.scss":"components/Home/Home.scss","../../generic/Data/DataCard":"generic/Data/DataCard.tsx","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../pages/Modal/Info/Info":"components/pages/Modal/Info/Info.tsx","nanoid":"../../node_modules/nanoid/index.browser.js","react-transition-group":"../../node_modules/react-transition-group/esm/index.js","../../lib/store/pages/ElectivesStore-store":"lib/store/pages/ElectivesStore-store.ts"}],"components/pages/LoanPortfolio/LoanPortfolio.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -73316,7 +77383,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38513" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41595" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
