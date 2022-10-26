@@ -66231,6 +66231,7 @@ var ElectivesStore = function () {
     this.link = '';
     this.messageToastHome = '';
     this.stateOffcanvas = false;
+    this.stateLoader = false;
     this.stateToastHome = false;
     (0, mobx_1.makeAutoObservable)(this, {}, {
       deep: true
@@ -66247,6 +66248,10 @@ var ElectivesStore = function () {
 
   ElectivesStore.prototype.setStateToastHome = function (val) {
     this.stateToastHome = val;
+  };
+
+  ElectivesStore.prototype.setStateLoader = function (val) {
+    this.stateLoader = val;
   };
 
   return ElectivesStore;
@@ -66300,7 +66305,51 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
     className: "me-auto"
   }, "Pro Z\u0430\u0439\u043C")), react_1.default.createElement(Toast_1.default.Body, null, ElectivesStore_store_1.default.messageToastHome)))));
 });
-},{"react":"../../node_modules/react/index.js","react-bootstrap/Toast":"../../node_modules/react-bootstrap/esm/Toast.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./ToastCustom.scss":"generic/ToastCustom/ToastCustom.scss","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../lib/store/pages/ElectivesStore-store":"lib/store/pages/ElectivesStore-store.ts"}],"components/Home/Home.tsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-bootstrap/Toast":"../../node_modules/react-bootstrap/esm/Toast.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./ToastCustom.scss":"generic/ToastCustom/ToastCustom.scss","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../lib/store/pages/ElectivesStore-store":"lib/store/pages/ElectivesStore-store.ts"}],"generic/ModalLoader/ModalLoader.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"generic/ModalLoader/ModalLoader.tsx":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var react_1 = __importDefault(require("react"));
+
+var mobx_react_lite_1 = require("mobx-react-lite");
+
+var react_bootstrap_1 = require("react-bootstrap");
+
+var ElectivesStore_store_1 = __importDefault(require("../../lib/store/pages/ElectivesStore-store"));
+
+require("./ModalLoader.scss");
+
+exports.default = (0, mobx_react_lite_1.observer)(function () {
+  return react_1.default.createElement("div", null, react_1.default.createElement(react_bootstrap_1.Modal, {
+    centered: true,
+    show: ElectivesStore_store_1.default.stateLoader,
+    onHide: function onHide() {
+      return ElectivesStore_store_1.default.setStateLoader(false);
+    },
+    backdrop: "static",
+    keyboard: false
+  }, react_1.default.createElement(react_bootstrap_1.Modal.Body, {
+    className: 'modal-loader'
+  }, react_1.default.createElement(react_bootstrap_1.Spinner, {
+    animation: "border",
+    variant: "light"
+  }), " \u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430...")));
+});
+},{"react":"../../node_modules/react/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../../lib/store/pages/ElectivesStore-store":"lib/store/pages/ElectivesStore-store.ts","./ModalLoader.scss":"generic/ModalLoader/ModalLoader.scss"}],"components/Home/Home.tsx":[function(require,module,exports) {
 "use strict";
 
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
@@ -66367,6 +66416,8 @@ var ElectivesStore_store_1 = __importDefault(require("../../lib/store/pages/Elec
 
 var ToastCustom_1 = __importDefault(require("../../generic/ToastCustom/ToastCustom"));
 
+var ModalLoader_1 = __importDefault(require("../../generic/ModalLoader/ModalLoader"));
+
 exports.default = (0, mobx_react_lite_1.observer)(function () {
   var _a = (0, react_1.useState)(false),
       showMessage = _a[0],
@@ -66380,6 +66431,7 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
 
   (0, react_1.useEffect)(function () {
     setShowMessage(true);
+    ElectivesStore_store_1.default.setStateLoader(false);
   }, []);
   return react_1.default.createElement(react_transition_group_1.CSSTransition, {
     in: showMessage,
@@ -66392,7 +66444,7 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
     style: {
       display: 'inline-block'
     }
-  }, react_1.default.createElement(ToastCustom_1.default, null), DataCard_1.data.map(function (data) {
+  }, react_1.default.createElement(ModalLoader_1.default, null), react_1.default.createElement(ToastCustom_1.default, null), DataCard_1.data.map(function (data) {
     return react_1.default.createElement(react_bootstrap_1.Row, {
       key: (0, nanoid_1.nanoid)(),
       style: {
@@ -66450,11 +66502,12 @@ exports.default = (0, mobx_react_lite_1.observer)(function () {
       className: 'home-btn',
       onClick: function onClick() {
         redirect(data.link);
+        ElectivesStore_store_1.default.setStateLoader(true);
       }
     }, "\u041E\u0442\u043A\u0440\u044B\u0442\u044C"))))));
   })));
 });
-},{"react":"../../node_modules/react/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./Home.scss":"components/Home/Home.scss","../../generic/Data/DataCard":"generic/Data/DataCard.tsx","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../pages/Modal/Info/Info":"components/pages/Modal/Info/Info.tsx","nanoid":"../../node_modules/nanoid/index.browser.js","react-transition-group":"../../node_modules/react-transition-group/esm/index.js","../../lib/store/pages/ElectivesStore-store":"lib/store/pages/ElectivesStore-store.ts","../../generic/ToastCustom/ToastCustom":"generic/ToastCustom/ToastCustom.tsx"}],"components/pages/LoanPortfolio/LoanPortfolio.scss":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","mobx-react-lite":"../../node_modules/mobx-react-lite/es/index.js","./Home.scss":"components/Home/Home.scss","../../generic/Data/DataCard":"generic/Data/DataCard.tsx","react-bootstrap":"../../node_modules/react-bootstrap/esm/index.js","../pages/Modal/Info/Info":"components/pages/Modal/Info/Info.tsx","nanoid":"../../node_modules/nanoid/index.browser.js","react-transition-group":"../../node_modules/react-transition-group/esm/index.js","../../lib/store/pages/ElectivesStore-store":"lib/store/pages/ElectivesStore-store.ts","../../generic/ToastCustom/ToastCustom":"generic/ToastCustom/ToastCustom.tsx","../../generic/ModalLoader/ModalLoader":"generic/ModalLoader/ModalLoader.tsx"}],"components/pages/LoanPortfolio/LoanPortfolio.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -77655,7 +77708,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34929" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36491" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
